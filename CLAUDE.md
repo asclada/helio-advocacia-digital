@@ -117,16 +117,36 @@ menos que o Lucas peça explicitamente.
 
 ## 11. Stack e Architecture
 
-*A definir.* Nenhuma tecnologia ou decisão técnica deve ser assumida ou
-inventada aqui. Esta seção só é preenchida quando uma decisão for
-efetivamente tomada, e deve refletir apenas o que já foi decidido.
+Decidido na Fase 1 (change `establish-design-system-and-stack`):
+
+- **Site institucional**: Next.js (App Router) + TypeScript + Tailwind CSS
+  v4 + shadcn/ui. Deploy em Vercel (mesma plataforma do site atual).
+- **Tokens de design**: cor, tipografia e espaçamento vivem em
+  `src/app/globals.css` (Tailwind v4 usa `@theme` em CSS, não
+  `tailwind.config.ts`). Referência completa em `docs/design-tokens.md`.
+- **Agente de IA de triagem**: roda externamente em **n8n** (mesmo padrão
+  dos agentes de WhatsApp da Vibe Digital) — não faz parte deste
+  repositório. O Next.js só hospeda a UI do widget de chat.
+- **Integração com o agente**: uma única API route
+  (`src/app/api/chat/route.ts`) faz proxy sem estado das mensagens do
+  widget para a URL configurada em `N8N_WEBHOOK_URL` (ver `.env.example`).
+  Essa rota não gerencia conversa nem chama LLM diretamente — quem decide
+  o fluxo de triagem é o workflow do n8n.
+- **Sem Supabase neste repositório**: o fluxo de dados real é
+  `site → n8n → Supabase (do CRM, projeto separado e multi-tenant)`. Este
+  repo não tem, e não deve ganhar, um cliente de banco de dados direto —
+  ver `openspec/changes/establish-design-system-and-stack/design.md` para
+  o raciocínio completo.
+- **CRM**: produto próprio, multi-tenant, em repositório separado —
+  totalmente fora do escopo deste projeto.
 
 ## 12. Como descobrir o estado atual do projeto
 
 - Mudanças ativas do OpenSpec: `openspec list --json`
 - Requisitos já consolidados: pasta `openspec/specs/`
-- Histórico de decisões e progresso: `git log` (quando o repositório Git for
-  inicializado)
+- Histórico de decisões e progresso: `git log`
+- Tokens de design atuais: `docs/design-tokens.md` e `src/app/globals.css`
+- Dependências instaladas: `package.json`
 
 ## 13. Última atualização
 

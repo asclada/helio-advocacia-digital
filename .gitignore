@@ -36,6 +36,7 @@ desktop.ini
 *.tmp
 *.temp
 *~
+temp-assets/
 
 # Credentials / private keys
 *.pem

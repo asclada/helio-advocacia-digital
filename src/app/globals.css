@@ -1,0 +1,122 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-playfair-display);
+  --font-serif: var(--font-cormorant-garamond);
+  --font-heading: var(--font-display);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Raw brand palette — same token names as the current production site's
+     Tailwind config, so Fase 2 work can reuse the class vocabulary the
+     Fase 0 copy/design decisions were already made against. */
+  --color-navy: var(--navy);
+  --color-navy-deep: var(--navy-deep);
+  --color-navy-surface: var(--navy-surface);
+  --color-navy-line: var(--navy-line);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-gold-dark: var(--gold-dark);
+  --color-whatsapp: var(--whatsapp);
+}
+
+:root {
+  /* Raw brand palette, carried over verbatim from the current production
+     site (extracted from its inline tailwind.config — see
+     docs/design-tokens.md for the source and rationale). */
+  --navy: #020617;
+  --navy-deep: #01030a;
+  --navy-surface: #0b1220;
+  --navy-line: #1e293b;
+  --gold: #b89452;
+  --gold-light: #e4d1a3;
+  --gold-dark: #997637;
+  --whatsapp: #25d366;
+
+  /* shadcn semantic tokens, mapped onto the brand palette above so
+     shadcn/ui components render in the site's navy + gold identity
+     instead of shadcn's generic neutral defaults. */
+  --background: var(--navy);
+  --foreground: #f3f4f6;
+  --card: var(--navy-surface);
+  --card-foreground: #f3f4f6;
+  --popover: var(--navy-surface);
+  --popover-foreground: #f3f4f6;
+  --primary: var(--gold);
+  --primary-foreground: var(--navy-deep);
+  --secondary: var(--navy-surface);
+  --secondary-foreground: var(--gold-light);
+  --muted: var(--navy-line);
+  --muted-foreground: #9ca3af;
+  --accent: var(--gold-light);
+  --accent-foreground: var(--navy-deep);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: var(--navy-line);
+  --input: var(--navy-line);
+  --ring: var(--gold);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --radius: 0.625rem;
+  --sidebar: var(--navy-surface);
+  --sidebar-foreground: #f3f4f6;
+  --sidebar-primary: var(--gold);
+  --sidebar-primary-foreground: var(--navy-deep);
+  --sidebar-accent: var(--navy-line);
+  --sidebar-accent-foreground: var(--gold-light);
+  --sidebar-border: var(--navy-line);
+  --sidebar-ring: var(--gold);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}

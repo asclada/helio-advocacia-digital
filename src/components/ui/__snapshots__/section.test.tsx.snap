@@ -1,0 +1,24 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Section > snapshot de combinações de spacing e container > spacing-compact-without-container 1`] = `
+<section
+  class="py-8 md:py-12"
+  data-slot="section"
+>
+  a
+</section>
+`;
+
+exports[`Section > snapshot de combinações de spacing e container > spacing-spacious-with-container 1`] = `
+<section
+  class="py-24 md:py-32"
+  data-slot="section"
+>
+  <div
+    class="mx-auto w-full px-4 sm:px-6 lg:px-8 max-w-7xl"
+    data-slot="container"
+  >
+    a
+  </div>
+</section>
+`;

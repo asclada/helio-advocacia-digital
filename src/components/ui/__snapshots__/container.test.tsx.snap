@@ -1,0 +1,28 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Container > snapshot de cada variante de size > size-default 1`] = `
+<div
+  class="mx-auto w-full px-4 sm:px-6 lg:px-8 max-w-7xl"
+  data-slot="container"
+>
+  a
+</div>
+`;
+
+exports[`Container > snapshot de cada variante de size > size-narrow 1`] = `
+<div
+  class="mx-auto w-full px-4 sm:px-6 lg:px-8 max-w-3xl"
+  data-slot="container"
+>
+  a
+</div>
+`;
+
+exports[`Container > snapshot de cada variante de size > size-wide 1`] = `
+<div
+  class="mx-auto w-full px-4 sm:px-6 lg:px-8 max-w-[90rem]"
+  data-slot="container"
+>
+  a
+</div>
+`;

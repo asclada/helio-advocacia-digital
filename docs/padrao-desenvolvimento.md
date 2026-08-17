@@ -1,8 +1,9 @@
 # Padrão de Desenvolvimento — Hélio Advocacia Digital
 
 > Este documento é a fonte de verdade de **processo** do projeto. Toda sessão nova
-> do Claude Code deve ler este arquivo junto com o handoff mais recente antes de
-> começar a trabalhar. Não é opcional — é o padrão fixo do projeto a partir da Fase 2.
+> do Claude Code deve ler este arquivo, o roadmap master (`docs/roadmap.md`) e o
+> handoff mais recente antes de começar a trabalhar. Não é opcional — é o padrão
+> fixo do projeto a partir da Fase 2.
 
 ## Princípio central
 
@@ -144,13 +145,47 @@ No segundo caso, a sugestão precisa vir **antes** de qualquer confirmação
 de saída, não depois — o objetivo é nunca perder uma sessão sem handoff
 por falta de aviso.
 
+### Ordem no fechamento de sessão: handoff antes da sugestão de commits
+
+O handoff é sempre a **primeira coisa escrita** ao encerrar uma sessão —
+antes de qualquer sugestão de como dividir os commits. Dois motivos:
+
+1. O handoff resume a sessão inteira, incluindo decisões de última hora
+   (ex: um refinamento de design feito depois da implementação original já
+   estar pronta) — sugerir commits antes de escrever o handoff arrisca
+   esquecer essas decisões na mensagem de commit.
+2. O próprio handoff é um dos arquivos que entra nos commits — ele precisa
+   existir antes de eu conseguir listar corretamente quais arquivos fazem
+   parte de qual commit.
+
 ---
+
+## 7. Roadmap master (`docs/roadmap.md`)
+
+`docs/roadmap.md` é o documento único de referência de **em que fase e
+checkpoint o projeto está** — todas as fases numeradas (0 a 10), status de
+cada uma, e checkboxes de checkpoint dentro das fases mais próximas (fases
+distantes ficam só como esqueleto de escopo provável, intencionalmente,
+até a fase anterior concluir e o escopo real ser definido em conversa).
+
+Não confundir com:
+- `docs/padrao-desenvolvimento.md` (este arquivo) — **como** trabalhamos.
+- `docs/specs/*.md` — especificação técnica de cada componente/feature.
+- `docs/handoffs/*.md` — registro de cada sessão individual.
+
+Regras:
+- Lido no início de **toda** sessão, junto com este arquivo e o handoff
+  mais recente (ver nota no topo deste documento).
+- Ao final de cada checkpoint ou fase concluída, as checkboxes e o status
+  correspondente no roadmap são atualizados como parte do commit daquele
+  checkpoint — o mesmo tratamento que já damos ao handoff.
 
 ## Checklist rápido (colar no início de cada sessão do Claude Code)
 
+- [ ] Li o roadmap master (`docs/roadmap.md`) para saber em que fase/checkpoint o projeto está?
 - [ ] Li o handoff da última sessão em `docs/handoffs/`?
 - [ ] Existe spec para o que vou construir? Se não, paro e escrevo primeiro.
 - [ ] Estou em Plan Mode antes de tocar em código?
 - [ ] O plano foi aprovado pelo Lucas?
 - [ ] Os testes foram escritos antes da implementação?
-- [ ] Ao terminar: commit referenciando a spec + handoff atualizado?
+- [ ] Ao terminar: handoff escrito primeiro, depois commit referenciando a spec + roadmap atualizado?

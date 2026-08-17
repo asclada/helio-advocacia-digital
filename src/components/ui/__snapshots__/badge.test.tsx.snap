@@ -1,0 +1,10 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Badge > snapshot 1`] = `
+<span
+  class="inline-flex items-center rounded-full border border-gold bg-gold/5 px-3 py-1 text-xs font-medium text-gold-light"
+  data-slot="badge"
+>
+  OAB/RN ativo
+</span>
+`;

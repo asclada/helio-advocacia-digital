@@ -9,6 +9,23 @@ schema: spec-driven
 #     We use conventional commits
 #     Domain: e-commerce platform
 
+context: |
+  PAUSADO CONSCIENTEMENTE a partir da Fase 2 (decisão de 2026-08-17) — não
+  reativado no momento. O fluxo real de especificação do projeto passou a
+  ser docs/specs/*.md + Plan Mode/TDD (ver docs/padrao-desenvolvimento.md,
+  seção 8.3, na raiz do repositório).
+
+  O conteúdo já arquivado aqui (Fase 0-1: establish-design-system-and-stack,
+  e as specs sincronizadas design-system/site-foundation) permanece como
+  histórico e não deve ser editado retroativamente. Componentes construídos
+  a partir da Fase 2 (Container/Section, Button, ...) não têm — e não
+  ganharão retroativamente — change/spec própria aqui; a especificação
+  deles vive em docs/specs/.
+
+  Se este fluxo for reativado no futuro, isso deve ser uma decisão
+  explícita registrada em docs/padrao-desenvolvimento.md, não uma retomada
+  automática só porque uma sessão abriu esta pasta.
+
 # Per-artifact rules (optional)
 # Add custom rules for specific artifacts.
 # Example:

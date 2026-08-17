@@ -78,8 +78,11 @@ Regras não negociáveis:
 4. Claude escreve o(s) teste(s) primeiro — devem falhar (red)
 5. Claude implementa até o teste passar (green)
 6. Lucas faz revisão visual/funcional
-7. Commit referenciando a spec (ex: `feat(ui): implementa Button conforme fase2-button.md`)
-8. Se for o fim da sessão de trabalho: escrever handoff em `docs/handoffs/`
+7. Se for o fim da sessão de trabalho: avaliar Learning System e LinkedIn
+   Workflow (ver seção 8) — **antes** de escrever o handoff
+8. Escrever handoff em `docs/handoffs/` (ver seção 6 — sempre antes da
+   sugestão de commits)
+9. Commit referenciando a spec (ex: `feat(ui): implementa Button conforme fase2-button.md`)
 
 ## 5. Estilo de comunicação e explicação técnica
 
@@ -180,6 +183,80 @@ Regras:
   correspondente no roadmap são atualizados como parte do commit daquele
   checkpoint — o mesmo tratamento que já damos ao handoff.
 
+## 8. Sistemas complementares: Learning, LinkedIn e OpenSpec
+
+Três sistemas de documentação existem no projeto além dos já descritos
+acima. Os dois primeiros tinham ficado esquecidos desde a criação inicial
+— nunca tinham sido incorporados ao fluxo real de sessão até esta seção
+ser escrita (2026-08-17). Esta seção formaliza isso.
+
+### 8.1 Learning System (`docs/learning/`)
+
+Registra evolução real de aprendizado do Lucas — não é log de atividade
+(isso já é Git/roadmap). Fonte de verdade completa: `docs/learning/README.md`
+(critérios de aprendizado real nas seções 2 e 5; níveis de domínio na
+seção 7; regras de evidência na seção 8).
+
+**Gatilho:** ao final de cada checkpoint/componente concluído, **antes de
+escrever o handoff**, avaliar se algo na sessão atende aos critérios das
+seções 7-8 do `docs/learning/README.md` — evidência real de compreensão
+ou aplicação (explicação do Lucas, debugging feito por ele, decisão técnica
+justificada), não apenas "a tarefa foi feita".
+
+**Regra:** se atender, **perguntar** ao Lucas se devo criar a session em
+`docs/learning/sessions/` (formato: seção 9 do README) e atualizar
+`docs/learning/progress.md`. Nunca criar automaticamente — a decisão de
+registrar é sempre do Lucas.
+
+### 8.2 LinkedIn Workflow (`docs/linkedin/`)
+
+Identifica experiências reais do projeto com potencial editorial para
+LinkedIn — camada editorial sobre evidências reais, nunca gera conteúdo
+nem publica sozinho. Fonte de verdade completa: `docs/linkedin/README.md`
+(princípios na seção 4; critérios de "Post Candidate" na seção 8; formato
+na seção 14); estados do pipeline em `docs/linkedin/pipeline.md`.
+
+**Gatilho:** no mesmo momento da avaliação do Learning System (final de
+checkpoint, antes do handoff), avaliar se algo no checkpoint atende aos
+critérios de relevância potencial da seção 8 do `docs/linkedin/README.md`
+— um erro importante, uma decisão difícil, uma descoberta, uma primeira
+implementação, um marco, ou uma situação em que a prática contradisse uma
+expectativa.
+
+**Regra:** se atender, **sinalizar** o candidato potencial ao Lucas e
+**perguntar** se devo registrar em `docs/linkedin/candidates/`, seguindo o
+formato da seção 14 do README. Claude nunca decide sozinho publicar ou
+criar um candidato sem perguntar — essa regra já está no design do
+sistema (seção 13 do README); esta seção só garante que o sistema seja de
+fato consultado a cada checkpoint, em vez de ficar esquecido.
+
+### 8.3 OpenSpec (`openspec/`) — pausado conscientemente
+
+Fluxo de especificação formal (`explore → propose → apply → sync → archive`,
+já descrito na seção 6 do `CLAUDE.md` do projeto), usado na Fase 0-1
+(`openspec/changes/archive/2026-08-15-establish-design-system-and-stack/`,
+sincronizado em `openspec/specs/design-system` e `openspec/specs/site-foundation`).
+
+**Decisão (2026-08-17):** o openspec fica pausado a partir da Fase 2 —
+não reativado agora. `docs/specs/*.md` + Plan Mode/TDD (seções 1-4 deste
+documento) são o fluxo real de especificação a partir daqui. Container/
+Section e Button **não** ganham change/spec retroativa no openspec — o
+conteúdo já arquivado da Fase 0-1 permanece como histórico, sem edição.
+Nota equivalente registrada em `openspec/config.yaml` (campo `context`),
+pra qualquer sessão futura que abra o openspec diretamente também ver essa
+decisão. Sem gatilho de avaliação por checkpoint, diferente de 8.1/8.2 —
+se a pausa for revertida no futuro, isso volta a ser uma decisão explícita
+em conversa, não uma reativação automática.
+
+### Não confundir os quatro sistemas
+
+- `docs/roadmap.md` — **em que fase/checkpoint** o projeto está.
+- `docs/specs/*.md` + `openspec/` — **o que** foi/será especificado e
+  construído (requisitos, critérios de aceite, decisões técnicas).
+- `docs/learning/` — **o que o Lucas aprendeu**, com evidência.
+- `docs/linkedin/` — **o que vale virar conteúdo público**, a partir do
+  que já aconteceu nos outros três.
+
 ## Checklist rápido (colar no início de cada sessão do Claude Code)
 
 - [ ] Li o roadmap master (`docs/roadmap.md`) para saber em que fase/checkpoint o projeto está?
@@ -188,4 +265,6 @@ Regras:
 - [ ] Estou em Plan Mode antes de tocar em código?
 - [ ] O plano foi aprovado pelo Lucas?
 - [ ] Os testes foram escritos antes da implementação?
-- [ ] Ao terminar: handoff escrito primeiro, depois commit referenciando a spec + roadmap atualizado?
+- [ ] Ao terminar: avaliei Learning System e LinkedIn Workflow (seção 8),
+      escrevi o handoff primeiro, depois sugeri o commit referenciando a
+      spec + roadmap atualizado?

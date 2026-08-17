@@ -76,8 +76,8 @@ O projeto é simultaneamente entrega real para o cliente e laboratório de apren
 - [x] **Setup de testes** — Vitest + Testing Library + jest-axe configurados e validados
 - [x] **Container/Section** — wrapper estrutural (`size`: narrow/default/wide; `spacing`: compact/default/spacious). Testado, documentado, commitado.
 - [x] **Button** — variantes primary/secondary/ghost, com refinamento de hover (borda intensifica para `gold` no `secondary`, `ghost` ganha borda sutil no hover, `hover:scale-105` compartilhado por todas as variantes). Testado (13 testes), documentado, commitado.
-- [ ] **Badge** — selos de credibilidade (ex: "OAB ativo", "+15 anos"). 🔄 Próximo.
-- [ ] **Card** — áreas de atuação, depoimentos, credenciais
+- [x] **Badge** — selos de credibilidade (ex: "OAB ativo", "+15 anos"), contorno dourado (`border-gold`/`bg-gold/5`/`text-gold-light`), sem variantes. Testado (8 testes), documentado, commitado.
+- [ ] **Card** — áreas de atuação, depoimentos, credenciais. 🔄 Próximo.
 - [ ] **Input + Label** — formulário de contato
 
 **Fora de escopo desta fase:** Header/Nav, Footer, widget de chat (mas tokens já reservados desde a Fase 1), integração do formulário com n8n, testes de regressão visual (Playwright).

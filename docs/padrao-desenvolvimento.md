@@ -257,6 +257,33 @@ em conversa, não uma reativação automática.
 - `docs/linkedin/` — **o que vale virar conteúdo público**, a partir do
   que já aconteceu nos outros três.
 
+## 9. README público — seção "Estado atual"
+
+O `README.md` (e sua tradução `README.pt-br.md`) é o único artefato deste
+projeto com audiência externa — recrutador, outro dev, qualquer pessoa
+que abra o repositório sem contexto nenhum. Sua seção "Estado atual"
+resume em que fase o projeto está e o que já foi entregue; ela desatualiza
+junto com o roadmap, mas ninguém além do Lucas costuma abrir o README
+durante o trabalho do dia a dia — por isso ela corre o risco real de
+ficar desatualizada silenciosamente se não tiver um gatilho explícito no
+processo, o mesmo problema que já tinha acontecido com `docs/learning/` e
+`docs/linkedin/` antes de serem formalizados na seção 8.
+
+**Gatilho:** ao final de cada **fase** concluída (não de cada
+checkpoint/componente — granularidade de checkpoint no README poluiria o
+que deveria ser um resumo enxuto para quem não tem contexto do projeto),
+antes ou junto do commit de encerramento da fase.
+
+**Regra:** revisar se a seção "Estado atual" de `README.md` e
+`README.pt-br.md` ainda reflete a realidade (fase que passou de "em
+andamento" para "concluída", o que mudou de próximo item) e atualizar os
+dois arquivos se não refletir. Diferente do Learning System e do LinkedIn
+Workflow (seção 8), isto **não é um julgamento de valor** — é puramente
+factual: a fase mudou de estado, o README precisa refletir isso. Por isso
+não gera pergunta de aprovação separada a cada vez; entra no mesmo commit
+de encerramento de fase, junto com o handoff e a atualização do roadmap
+(seção 7) — não é uma tarefa avulsa a lembrar depois.
+
 ## Checklist rápido (colar no início de cada sessão do Claude Code)
 
 - [ ] Li o roadmap master (`docs/roadmap.md`) para saber em que fase/checkpoint o projeto está?
@@ -268,3 +295,6 @@ em conversa, não uma reativação automática.
 - [ ] Ao terminar: avaliei Learning System e LinkedIn Workflow (seção 8),
       escrevi o handoff primeiro, depois sugeri o commit referenciando a
       spec + roadmap atualizado?
+- [ ] Se esta sessão encerrou uma **fase** (não só um checkpoint): a
+      seção "Estado atual" de README.md e README.pt-br.md ainda reflete
+      a realidade? (seção 9)

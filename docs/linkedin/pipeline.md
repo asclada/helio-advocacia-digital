@@ -52,6 +52,8 @@ O post foi efetivamente publicado no LinkedIn. Estado final do candidato.
 
 ### Captured
 - [Testes verdes não bastam: um bug de alinhamento que só apareceu na revisão visual](candidates/2026-08-17-card-visual-review-catches-bug.md) — 2026-08-17, Fase 2 (`Card`)
+- [Link ou botão? Um aviso do console que quase virou o bug errado](candidates/2026-08-18-whatsapp-cta-link-vs-button-role.md) — 2026-08-18, Fase 3 (Header/CTA de WhatsApp)
+- [O "bug" que só existia porque a aba estava em segundo plano](candidates/2026-08-18-intersection-observer-hidden-tab.md) — 2026-08-18, Fase 3 (Header/scroll-spy)
 
 ### Evaluating
 _Vazia._

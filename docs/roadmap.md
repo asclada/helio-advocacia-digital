@@ -27,7 +27,7 @@ O projeto é simultaneamente entrega real para o cliente e laboratório de apren
 | 0 | Auditoria | ✅ Concluída |
 | 1 | Design System | ✅ Concluída |
 | 2 | Componentes de UI Base | ✅ Concluída |
-| 3 | Header, Nav e Footer | ⏳ Não iniciada |
+| 3 | Header, Nav e Footer | ✅ Concluída |
 | 4 | Montagem das páginas do site | ⏳ Não iniciada |
 | 5 | Supabase — banco do CRM | ⏳ Não iniciada |
 | 6 | CRM — painel autenticado | ⏳ Não iniciada |
@@ -59,7 +59,7 @@ O projeto é simultaneamente entrega real para o cliente e laboratório de apren
 - Stack de UI definida: shadcn/ui + Tailwind com tema 100% customizado (sem defaults)
 - Paleta navy/gold traduzida em tokens reais no Tailwind config
 - Tipografia definida: Playfair Display (headlines), Inter (corpo/UI), Cormorant Garamond itálico (subtítulos editoriais)
-- Reserva de z-index e token de cor para o futuro widget de chat, já feita no tema (evita retrofit na Fase 8)
+- Token de cor para o futuro widget de chat (`--color-whatsapp`) já reservado no tema — a reserva de *z-index* (`--z-chat-widget`) só foi criada de fato na Fase 3, junto do Header/Footer que precisavam definir a ordem de camadas (correção factual registrada ao fechar a Fase 3)
 - Direção do Hero prototipada como referência visual (asimétrico, navy-950, foto do Dr. Hélio, CTA gold)
 
 **Registro:** handoff da Fase 1 (ver `docs/handoffs/`)
@@ -90,13 +90,23 @@ O projeto é simultaneamente entrega real para o cliente e laboratório de apren
 
 ---
 
-## Fase 3 — Header, Nav e Footer ⏳
+## Fase 3 — Header, Nav e Footer ✅
 
 **Objetivo:** construir a navegação e o rodapé do site, usando os componentes da Fase 2 como base.
 
-**Spec:** a escrever quando a Fase 2 concluir.
+**Spec:** `docs/specs/fase3-header-nav-footer.md`
 
-**Provável escopo:** Header com navegação responsiva (menu mobile), Footer com informações institucionais/contato, ambos usando tokens do design system.
+**Checkpoints:**
+- [x] **Header + Nav** — sticky, transição transparente→sólido (`bg-navy`+sombra) após 64px de scroll; nav com link ativo via scroll-spy (`IntersectionObserver`, hook `useActiveSection`); CTA "Fale Conosco" (`WhatsAppCta`, reutilizável, mensagem única do site); drawer mobile sobre `Dialog` do Base UI (focus trap, Esc, overlay e devolução de foco resolvidos pela própria lib). Testado (32 testes entre hooks, `WhatsAppCta`, `Header` e `NavDrawer`), documentado, commitado.
+- [x] **Footer** — colunas de Identidade/Navegação/Contato (reaproveita os mesmos anchors do Header), ícone em cada contato (WhatsApp/Instagram/Facebook como SVG inline, e-mail/cidade/OAB via `lucide-react`), copyright e aviso legal da OAB (Provimento nº 205/2021), reserva de espaço/z-index do futuro widget de chat (sem lógica). `href`s de Instagram/Facebook/e-mail confirmados via fetch direto no site atual em produção. Testado (13 testes), documentado, commitado.
+
+**Fora de escopo desta fase:** lógica funcional do widget de chat (só reserva de espaço/z-index), multi-idioma, qualquer seção de conteúdo nova (Áreas de Atuação/Sobre/FAQ/Contato são Fase 4) — por isso os anchors do nav (`#atuacao`, `#sobre`, `#faq`, `#contato`) ainda não têm `<section>` real pra apontar; a confirmação ponta a ponta do scroll/link ativo acontece só quando a Fase 4 criar essas seções (usando `scroll-mt-(--header-height)`, documentado na spec).
+
+**Critério de conclusão da fase:** Header e Footer implementados, testados (`jest-axe` sem violações, comportamento de scroll/drawer/scroll-spy cobertos com mocks), documentados e commitados, com revisão visual aprovada. ✅ Atingido — 122 testes passando no total, `tsc`/`lint` limpos.
+
+**Entregue:** Header sticky com nav por âncora e drawer mobile, e Footer de 3 colunas com reserva do widget de chat — navegação e rodapé completos do site, prontos para as páginas reais da Fase 4.
+
+**Registro:** handoffs da Fase 3 em `docs/handoffs/`
 
 ---
 

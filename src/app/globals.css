@@ -107,6 +107,17 @@
   --sidebar-accent-foreground: var(--gold-light);
   --sidebar-border: var(--navy-line);
   --sidebar-ring: var(--gold);
+
+  /* Header/nav layout tokens (Fase 3 — docs/specs/fase3-header-nav-footer.md).
+     --header-height também vive em src/lib/layout-tokens.ts (HEADER_HEIGHT_PX)
+     para uso em JS (scroll-spy) — os dois valores precisam ficar em sincronia
+     manualmente. Ordem de z-index: --z-drawer (modal, cobre tudo) >
+     --z-header (sticky) > --z-chat-widget (reserva para a Fase 8 — some atrás
+     do drawer quando ele está aberto). */
+  --header-height: 72px;
+  --z-header: 40;
+  --z-chat-widget: 30;
+  --z-drawer: 50;
 }
 
 @layer base {

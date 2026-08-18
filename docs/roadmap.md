@@ -26,7 +26,7 @@ O projeto é simultaneamente entrega real para o cliente e laboratório de apren
 |---|---|---|
 | 0 | Auditoria | ✅ Concluída |
 | 1 | Design System | ✅ Concluída |
-| 2 | Componentes de UI Base | 🔄 Em andamento |
+| 2 | Componentes de UI Base | ✅ Concluída |
 | 3 | Header, Nav e Footer | ⏳ Não iniciada |
 | 4 | Montagem das páginas do site | ⏳ Não iniciada |
 | 5 | Supabase — banco do CRM | ⏳ Não iniciada |
@@ -66,7 +66,7 @@ O projeto é simultaneamente entrega real para o cliente e laboratório de apren
 
 ---
 
-## Fase 2 — Componentes de UI Base 🔄
+## Fase 2 — Componentes de UI Base ✅
 
 **Objetivo:** construir os componentes reutilizáveis que vão sustentar todas as páginas, seguindo Plan Mode + SDD + TDD (padrão fixado a partir desta fase — ver `docs/padrao-desenvolvimento.md`).
 
@@ -78,11 +78,15 @@ O projeto é simultaneamente entrega real para o cliente e laboratório de apren
 - [x] **Button** — variantes primary/secondary/ghost, com refinamento de hover (borda intensifica para `gold` no `secondary`, `ghost` ganha borda sutil no hover, `hover:scale-105` compartilhado por todas as variantes). Testado (13 testes), documentado, commitado.
 - [x] **Badge** — selos de credibilidade (ex: "OAB ativo", "+15 anos"), contorno dourado (`border-gold`/`bg-gold/5`/`text-gold-light`), sem variantes. Testado (8 testes), documentado, commitado.
 - [x] **Card** — áreas de atuação, depoimentos, credenciais. Subcomponentes de composição (`CardHeader`/`CardTitle`/`CardDescription`/`CardContent`/`CardFooter`), `bg-card`+`border-border`, `h-full`+`mt-auto` para alinhar rodapés entre cards de conteúdo desigual numa grid (ajuste pós-revisão visual). Testado (17 testes), documentado, commitado.
-- [ ] **Input + Label** — formulário de contato. 🔄 Próximo.
+- [x] **Input + Label** — formulário de contato. Base UI Field (`Field`/`FieldLabel`/`FieldDescription`/`FieldError`, associação label↔input e `aria-invalid`/`aria-describedby` automáticos) + `Input`, mesma família de primitiva do `Button`. Dois achados reais de contraste corrigidos com script (não estimado): borda de repouso usa `border-muted-foreground` (não `border-input`, que falha os 3:1 exigidos por ser componente interativo — diferente do `Card`) e o texto de `FieldError` usa `text-foreground` (não `text-destructive`, que falha os 4.5:1 de texto AA). Testado (23 testes), documentado, commitado.
 
 **Fora de escopo desta fase:** Header/Nav, Footer, widget de chat (mas tokens já reservados desde a Fase 1), integração do formulário com n8n, testes de regressão visual (Playwright).
 
-**Critério de conclusão da fase:** os 5 componentes implementados, testados (jest-axe sem violações, snapshot por variante, contraste AA), documentados e commitados.
+**Critério de conclusão da fase:** os 5 componentes implementados, testados (jest-axe sem violações, snapshot por variante, contraste AA), documentados e commitados. ✅ Atingido — 77 testes passando no total, `jest-axe` sem violações em nenhum componente, `tsc`/`lint` limpos.
+
+**Entregue:** os 5 componentes de UI base do site (`Container`/`Section`, `Button`, `Badge`, `Card`, `Input`+`Label`) prontos, testados e documentados, estabelecendo o padrão de processo (Plan Mode + SDD + TDD, `docs/padrao-desenvolvimento.md`) que passa a valer para o resto do projeto a partir daqui.
+
+**Registro:** handoffs da Fase 2 em `docs/handoffs/` (`2026-08-17-fase2-setup-testes.md`, `2026-08-17-fase2-container-section.md`, `2026-08-17-fase2-button.md`, `2026-08-17-fase2-badge.md`, `2026-08-17-fase2-card.md`, `2026-08-17-fase2-input-label.md`)
 
 ---
 

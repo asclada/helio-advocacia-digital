@@ -11,8 +11,8 @@ aprendizado — nunca automaticamente após uma tarefa concluída.
 
 ## Fase atual
 
-Nenhuma fase do roadmap foi iniciada ainda. Ambiente e estrutura de
-documentação em preparação.
+Fase 2 — Componentes de UI Base, em andamento (Container/Section, Button e
+Badge concluídos; Card concluído; Input+Label é o próximo checkpoint).
 
 ## Conceitos em aprendizagem
 
@@ -24,10 +24,9 @@ _Nenhum conceito registrado ainda._
 
 ## Habilidades práticas
 
-_Nenhuma habilidade prática registrada ainda._
-
 | Habilidade | Nível de domínio | Evidência |
 |---|---|---|
+| CSS Grid (`align-items: stretch`) + padrão `mt-auto` para alinhar rodapés entre cards de conteúdo desigual numa mesma linha de grid | Consigo raciocinar | [docs/learning/sessions/2026-08-17-card-height-alignment.md](sessions/2026-08-17-card-height-alignment.md) |
 
 ## Checkpoints de aprendizagem
 
@@ -35,7 +34,11 @@ _Nenhum checkpoint de aprendizagem atingido ainda._
 
 ## Evidências de evolução
 
-_Nenhuma evidência registrada ainda._
+- 2026-08-17 — diagnóstico independente da causa raiz de um bug de
+  alinhamento visual no componente `Card` (Fase 2), com correção técnica
+  proposta pelo próprio Lucas e verificada por uma pergunta de caso de
+  borda antes de aceitar a explicação. Ver
+  [sessão completa](sessions/2026-08-17-card-height-alignment.md).
 
 ---
 

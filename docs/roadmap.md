@@ -77,8 +77,8 @@ O projeto é simultaneamente entrega real para o cliente e laboratório de apren
 - [x] **Container/Section** — wrapper estrutural (`size`: narrow/default/wide; `spacing`: compact/default/spacious). Testado, documentado, commitado.
 - [x] **Button** — variantes primary/secondary/ghost, com refinamento de hover (borda intensifica para `gold` no `secondary`, `ghost` ganha borda sutil no hover, `hover:scale-105` compartilhado por todas as variantes). Testado (13 testes), documentado, commitado.
 - [x] **Badge** — selos de credibilidade (ex: "OAB ativo", "+15 anos"), contorno dourado (`border-gold`/`bg-gold/5`/`text-gold-light`), sem variantes. Testado (8 testes), documentado, commitado.
-- [ ] **Card** — áreas de atuação, depoimentos, credenciais. 🔄 Próximo.
-- [ ] **Input + Label** — formulário de contato
+- [x] **Card** — áreas de atuação, depoimentos, credenciais. Subcomponentes de composição (`CardHeader`/`CardTitle`/`CardDescription`/`CardContent`/`CardFooter`), `bg-card`+`border-border`, `h-full`+`mt-auto` para alinhar rodapés entre cards de conteúdo desigual numa grid (ajuste pós-revisão visual). Testado (17 testes), documentado, commitado.
+- [ ] **Input + Label** — formulário de contato. 🔄 Próximo.
 
 **Fora de escopo desta fase:** Header/Nav, Footer, widget de chat (mas tokens já reservados desde a Fase 1), integração do formulário com n8n, testes de regressão visual (Playwright).
 

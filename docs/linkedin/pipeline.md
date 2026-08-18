@@ -51,7 +51,7 @@ O post foi efetivamente publicado no LinkedIn. Estado final do candidato.
 ## Filas atuais
 
 ### Captured
-_Vazia._
+- [Testes verdes não bastam: um bug de alinhamento que só apareceu na revisão visual](candidates/2026-08-17-card-visual-review-catches-bug.md) — 2026-08-17, Fase 2 (`Card`)
 
 ### Evaluating
 _Vazia._
@@ -67,4 +67,4 @@ _Vazia._
 
 ---
 
-Nenhum candidato foi criado até o momento.
+Primeiro candidato criado em 2026-08-17 (ver fila `Captured` acima).

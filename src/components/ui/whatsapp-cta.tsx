@@ -7,6 +7,17 @@ import { cn } from "@/lib/utils"
 const WHATSAPP_NUMBER = "5584994776673"
 const DEFAULT_MESSAGE = "Olá, vim pelo site e gostaria de mais informações."
 
+/**
+ * Constrói a URL do wa.me com a mensagem única do site (ver
+ * docs/specs/fase3-header-nav-footer.md, 2.1). Exportada para o link de
+ * contato do Footer reaproveitar a mesma lógica em vez de duplicar o
+ * número/mensagem — o Footer não usa `WhatsAppCta` diretamente porque
+ * precisa do estilo de link de uma lista de contatos, não de um botão.
+ */
+function getWhatsAppUrl(message: string = DEFAULT_MESSAGE) {
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
+}
+
 interface WhatsAppCtaProps {
   message?: string
   size?: "default" | "lg"
@@ -34,7 +45,7 @@ function WhatsAppCta({
   className,
   children,
 }: WhatsAppCtaProps) {
-  const href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
+  const href = getWhatsAppUrl(message)
 
   return (
     <a
@@ -53,4 +64,4 @@ function WhatsAppCta({
   )
 }
 
-export { WhatsAppCta }
+export { WhatsAppCta, getWhatsAppUrl }

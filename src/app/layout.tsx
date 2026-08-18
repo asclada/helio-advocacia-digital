@@ -3,6 +3,7 @@ import { Playfair_Display, Inter, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 
 import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
 
 const playfairDisplay = Playfair_Display({
   variable: "--font-playfair-display",
@@ -38,6 +39,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );

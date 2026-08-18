@@ -1,0 +1,258 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Footer > snapshot 1`] = `
+<footer
+  class="border-t border-border bg-navy-surface"
+>
+  <div
+    class="mx-auto w-full px-4 sm:px-6 lg:px-8 max-w-7xl grid gap-10 py-10 sm:grid-cols-2 lg:grid-cols-3"
+    data-slot="container"
+  >
+    <div
+      class="flex flex-col gap-3"
+    >
+      <span
+        class="font-display text-lg font-semibold text-gold-light"
+      >
+        Helio Kleison
+      </span>
+      <p
+        class="max-w-xs text-sm text-muted-foreground"
+      >
+        Advocacia especializada em Direito Bancário, atendimento presencial em Natal/RN e online para todo o Brasil.
+      </p>
+    </div>
+    <nav
+      aria-label="Navegação do rodapé"
+      class="flex flex-col gap-3"
+    >
+      <span
+        class="text-xs font-semibold tracking-widest text-gold-light"
+      >
+        Navegação
+      </span>
+      <a
+        class="text-sm text-muted-foreground transition-colors hover:text-gold-light"
+        href="#atuacao"
+      >
+        Áreas de Atuação
+      </a>
+      <a
+        class="text-sm text-muted-foreground transition-colors hover:text-gold-light"
+        href="#sobre"
+      >
+        Sobre o Advogado
+      </a>
+      <a
+        class="text-sm text-muted-foreground transition-colors hover:text-gold-light"
+        href="#faq"
+      >
+        Dúvidas Frequentes
+      </a>
+      <a
+        class="text-sm text-muted-foreground transition-colors hover:text-gold-light"
+        href="#contato"
+      >
+        Contato
+      </a>
+    </nav>
+    <div
+      class="flex flex-col gap-3"
+    >
+      <span
+        class="text-xs font-semibold tracking-widest text-gold-light"
+      >
+        Contato
+      </span>
+      <a
+        class="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-gold-light"
+        href="https://wa.me/5584994776673?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es."
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <svg
+          aria-hidden="true"
+          class="size-4 text-gold"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.148-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.148.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"
+          />
+          <path
+            d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.85.5 3.58 1.44 5.13L2 22l5.11-1.53a9.87 9.87 0 0 0 4.93 1.31h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm0 17.9h-.01a8.5 8.5 0 0 1-4.31-1.18l-.31-.18-3.03.9.91-2.95-.2-.31a8.44 8.44 0 0 1-1.3-4.5c0-4.66 3.79-8.45 8.45-8.45 2.26 0 4.38.88 5.98 2.48a8.4 8.4 0 0 1 2.47 5.97c0 4.66-3.79 8.45-8.45 8.45Z"
+          />
+        </svg>
+        (84) 99477-6673
+      </a>
+      <a
+        class="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-gold-light"
+        href="https://instagram.com/heliokleison.advocacia"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <svg
+          aria-hidden="true"
+          class="size-4 text-gold"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <rect
+            height="20"
+            rx="5"
+            ry="5"
+            width="20"
+            x="2"
+            y="2"
+          />
+          <path
+            d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"
+          />
+          <line
+            x1="17.5"
+            x2="17.51"
+            y1="6.5"
+            y2="6.5"
+          />
+        </svg>
+        @heliokleison.advocacia
+      </a>
+      <a
+        class="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-gold-light"
+        href="https://www.facebook.com/heliokleison.advocacia"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <svg
+          aria-hidden="true"
+          class="size-4 text-gold"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M22 12a10 10 0 1 0-11.5 9.87v-6.98H7.9V12h2.6V9.8c0-2.57 1.53-3.99 3.87-3.99 1.12 0 2.3.2 2.3.2v2.53h-1.3c-1.28 0-1.68.8-1.68 1.62V12h2.86l-.46 2.89h-2.4v6.98A10 10 0 0 0 22 12z"
+          />
+        </svg>
+        Helio Kleison Advogado
+      </a>
+      <a
+        class="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-gold-light"
+        href="mailto:heliokleison.advocacia@gmail.com"
+      >
+        <svg
+          aria-hidden="true"
+          class="lucide lucide-mail size-4 text-gold"
+          fill="none"
+          height="24"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"
+          />
+          <rect
+            height="16"
+            rx="2"
+            width="20"
+            x="2"
+            y="4"
+          />
+        </svg>
+        heliokleison.advocacia@gmail.com
+      </a>
+      <span
+        class="flex items-center gap-2 text-sm text-muted-foreground"
+      >
+        <svg
+          aria-hidden="true"
+          class="lucide lucide-map-pin size-4 text-gold"
+          fill="none"
+          height="24"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"
+          />
+          <circle
+            cx="12"
+            cy="10"
+            r="3"
+          />
+        </svg>
+        Natal/RN
+      </span>
+      <span
+        class="flex items-center gap-2 text-sm text-muted-foreground"
+      >
+        <svg
+          aria-hidden="true"
+          class="lucide lucide-scale size-4 text-gold"
+          fill="none"
+          height="24"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12 3v18"
+          />
+          <path
+            d="m19 8 3 8a5 5 0 0 1-6 0zV7"
+          />
+          <path
+            d="M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1"
+          />
+          <path
+            d="m5 8 3 8a5 5 0 0 1-6 0zV7"
+          />
+          <path
+            d="M7 21h10"
+          />
+        </svg>
+        OAB/RN 20.357
+      </span>
+    </div>
+  </div>
+  <div
+    class="border-t border-border"
+  >
+    <div
+      class="mx-auto w-full px-4 sm:px-6 lg:px-8 max-w-7xl flex flex-col gap-4 py-5 text-xs text-muted-foreground"
+      data-slot="container"
+    >
+      <p>
+        © Helio Kleison Advocacia e Consultoria Jurídica. Todos os direitos reservados.
+      </p>
+      <p
+        class="max-w-3xl"
+      >
+        Este site tem caráter exclusivamente informativo, em conformidade com o Provimento nº 205/2021 do Conselho Federal da OAB. As informações aqui apresentadas não configuram publicidade irregular, tampouco constituem promessa ou garantia de resultado — todo atendimento jurídico depende de avaliação individual do caso.
+      </p>
+    </div>
+  </div>
+  <div
+    aria-hidden="true"
+    class="fixed right-6 bottom-6 z-(--z-chat-widget)"
+    data-slot="chat-widget-reserve"
+  />
+</footer>
+`;

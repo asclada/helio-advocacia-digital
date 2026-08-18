@@ -114,7 +114,16 @@ O projeto é simultaneamente entrega real para o cliente e laboratório de apren
 
 **Objetivo:** montar as páginas reais (Home, Sobre, Áreas de Atuação, Contato) usando os componentes prontos, com o conteúdo jurídico já existente (reaproveitado da Fase 0).
 
-**Provável escopo:** Home primeiro (prioridade — é onde cai o tráfego), depois as demais. CTA continua apontando para WhatsApp até o widget da Fase 8 estar pronto. Deploy como preview na Vercel, não produção ainda.
+**Decisão de arquitetura (fechada na sessão da Fase 4.1):** o site deixa de ser single-page com âncoras (padrão da Fase 3) e passa a ser **Home enxuta + páginas dedicadas** (`/`, `/sobre`, `/areas-de-atuacao`, `/contato`), usando rotas nativas do App Router — melhor indexação no Google para buscas locais do que uma âncora só. A Home contém versões resumidas de cada seção, cada uma linkando para sua página dedicada.
+
+**Checkpoints:**
+- [x] **Fase 4.1 — Hero da Home** — headline em frase única (Playfair Display, tipografia uniforme, destaque dourado só em "patrimônio"), retrato do Dr. Hélio com fundo removido e ancorado na borda inferior do Hero, CTA duplo (WhatsApp + âncora `#atuacao`), selo de confiança. Spec: `docs/specs/fase4-1-hero.md` (4 rodadas de ajuste pós-revisão visual documentadas). Testado (9 testes novos, `jest-axe` sem violações), documentado — commit pendente de aprovação.
+- [ ] **Fase 4.2** — Seção "Áreas de Atuação" (resumo/carrossel na Home)
+- [ ] **Fase 4.3** — Seção "Sobre" (resumo na Home)
+- [ ] **Fase 4.4** — CTA/Contato na Home
+- [ ] **Fase 4.5+** — Páginas dedicadas (`/sobre`, `/areas-de-atuacao`, `/contato`), uma spec por página
+
+CTA continua apontando para WhatsApp até o widget da Fase 8 estar pronto. Deploy como preview na Vercel, não produção ainda.
 
 ---
 

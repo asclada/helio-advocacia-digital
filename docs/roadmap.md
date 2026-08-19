@@ -30,7 +30,7 @@ O projeto é simultaneamente entrega real para o cliente e laboratório de apren
 | 3 | Header, Nav e Footer | ✅ Concluída |
 | 4 | Montagem das páginas do site | ✅ Concluída |
 | 5 | Supabase — banco do CRM | ✅ Concluída |
-| 6 | CRM — painel autenticado | ⏳ Não iniciada |
+| 6 | CRM — painel autenticado | ✅ Concluída |
 | 7 | n8n — migração do agente de IA | ⏳ Não iniciada |
 | 8 | Widget de chat no site | ⏳ Não iniciada |
 | 9 | Integração ponta a ponta | ⏳ Não iniciada |
@@ -150,11 +150,15 @@ CTA continua apontando para WhatsApp até o widget da Fase 8 estar pronto. Deplo
 
 ---
 
-## Fase 6 — CRM — painel autenticado ⏳
+## Fase 6 — CRM — painel autenticado ✅
 
-**Objetivo:** construir o painel que o Dr. Hélio e a secretária vão usar: login, lista de leads, detalhe de triagem, gestão de status, permissões por papel (role).
+**Objetivo:** construir o painel que o Dr. Hélio e a secretária vão usar para ver os leads já triados pelo agente de IA.
 
-**Provável escopo:** projeto Next.js separado do site institucional, publicado à parte na Vercel.
+**Escopo real (spec em `helio-advocacia-crm/docs/specs/fase6-painel-autenticado.md`, revisado em conversa em 2026-08-19, mais enxuto que o esqueleto provável que estava aqui antes):** login com os 3 usuários já existentes no Supabase Auth, sidebar com um único item ("Clientes"), página `/clientes` (tabela dos leads `status = 'concluido'`, ordenação e busca por nome) e `/clientes/[id]` (detalhe read-only, todos os campos, "Não informado" nos nulos). **Gestão de status/arquivamento de lead e permissões por `role` ficaram deliberadamente fora do escopo** — não são pendência da Fase 6, viram uma fase nova (número a definir), com spec própria a ser escrita quando chegar a vez.
+
+**Entregue:** projeto Next.js 16 (React 19, Tailwind v4, shadcn/ui sobre Radix UI — divergência intencional do site institucional, que usa Base UI) no repositório `helio-advocacia-crm`; autenticação via `@supabase/ssr` com proteção de rota em duas camadas (`proxy.ts` — renomeação de `middleware.ts` a partir do Next.js 16 — mais recheck de sessão no Server Component do layout protegido, defense-in-depth); tabela de leads com TanStack Table (ordenação por `concluida_em` decrescente, busca por nome); página de detalhe com todos os campos do schema. Construído com TDD (teste antes da implementação) em toda a lógica de negócio, com `jest-axe` nos componentes interativos — 29 testes passando, `tsc`/`lint`/`build` limpos. Verificado manualmente com os 3 usuários reais do escritório (login, bloqueio de acesso sem sessão, erro genérico em credencial inválida, navegação lista → detalhe, 404 em id inexistente, logout invalidando a sessão de fato).
+
+**Registro:** spec e handoff no repo do CRM — `helio-advocacia-crm/docs/specs/fase6-painel-autenticado.md` e `helio-advocacia-crm/docs/handoffs/2026-08-19-fase6-painel-autenticado.md`.
 
 ---
 

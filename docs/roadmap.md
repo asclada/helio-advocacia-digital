@@ -29,7 +29,7 @@ O projeto é simultaneamente entrega real para o cliente e laboratório de apren
 | 2 | Componentes de UI Base | ✅ Concluída |
 | 3 | Header, Nav e Footer | ✅ Concluída |
 | 4 | Montagem das páginas do site | ✅ Concluída |
-| 5 | Supabase — banco do CRM | ⏳ Não iniciada |
+| 5 | Supabase — banco do CRM | ✅ Concluída |
 | 6 | CRM — painel autenticado | ⏳ Não iniciada |
 | 7 | n8n — migração do agente de IA | ⏳ Não iniciada |
 | 8 | Widget de chat no site | ⏳ Não iniciada |
@@ -131,15 +131,22 @@ CTA continua apontando para WhatsApp até o widget da Fase 8 estar pronto. Deplo
 
 ---
 
-## Fase 5 — Supabase — banco do CRM ⏳
+## Fase 5 — Supabase — banco do CRM ✅
 
 **Objetivo:** criar o projeto Supabase do CRM (separado do que hoje serve o agente via Evolution API), com schema, Auth e RLS.
 
-**Provável escopo (a confirmar em spec própria):**
-- Schema inicial: `clients`, `leads`, `triagens`, `profiles`
-- Supabase Auth para login do advogado e da secretária
-- Row Level Security como fronteira de acesso
-- `client_id` como preparação para multi-tenant desde o início
+**Repositório novo:** a partir desta fase, o CRM (banco + futuro painel da Fase 6) vive em um repositório separado do site institucional — [`asclada/helio-advocacia-crm`](https://github.com/asclada/helio-advocacia-crm), privado. Este roadmap master continua neste repo (site) como referência única das 3 camadas do projeto; specs, migrations e handoffs da Fase 5 em diante vivem no repo novo.
+
+**Escopo real (spec em `helio-advocacia-crm/docs/specs/fase5-supabase-schema.md`, decisão fechada em conversa em 2026-08-19, revisando o esqueleto provável que estava aqui antes):**
+- Duas tabelas, não quatro: `leads` (registro único e "achatado" da triagem completa — sem tabela separada de `triagens`) e `profiles` (ligada a `auth.users`, com `role` já preparado mas sem uso em RLS ainda). Sem tabela `clients`.
+- **Sem `client_id`/preparação multi-tenant** — o CRM atende só o escritório do Dr. Hélio, um único tenant.
+- RLS: os 3 acessos (Dr. Hélio, secretária, Lucas) com o mesmo nível de permissão — CRUD completo em `leads`, sem diferenciar por `role` nesta fase.
+- n8n escreve em `leads` via **service role key** (contorna RLS), não como usuário autenticado — decisão documentada para a Fase 7 não precisar redecidir.
+- Migrations via **Supabase CLI**, versionadas em `supabase/migrations/` no repo novo (não pelo dashboard do Supabase).
+
+**Entregue:** projeto Supabase "Helio Advocacia CRM" (região `sa-east-1`) criado; migration única com as tabelas `leads`/`profiles`, `check constraints` e as 3 policies de RLS aplicada via `supabase db push`; todos os critérios de aceite verificados manualmente (CRUD de usuário autenticado, bloqueio total de usuário anônimo, bypass da `service_role` key, `check constraints`, restrição de `profiles` à própria linha); 3 usuários reais criados no Supabase Auth com `profiles` correspondentes (Dr. Hélio/advogado, Mary/secretaria, Lucas/admin). Ambiente sem Docker — CLI instalado como dev dependency via npm, trabalho direto contra o projeto na nuvem.
+
+**Registro:** spec e handoff no repo novo — `helio-advocacia-crm/docs/specs/fase5-supabase-schema.md` e `helio-advocacia-crm/docs/handoffs/2026-08-19-fase5-schema-supabase.md`.
 
 ---
 

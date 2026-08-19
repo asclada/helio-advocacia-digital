@@ -45,11 +45,11 @@ describe("Hero", () => {
     expect(link).toHaveAttribute("target", "_blank")
   })
 
-  it("CTA secundário aponta para a âncora #atuacao", () => {
+  it("CTA secundário aponta para a página dedicada /areas-de-atuacao", () => {
     render(<Hero />)
 
     const link = screen.getByRole("link", { name: "Ver áreas de atuação" })
-    expect(link).toHaveAttribute("href", "#atuacao")
+    expect(link).toHaveAttribute("href", "/areas-de-atuacao")
   })
 
   it("renderiza os 3 badges de confiança", () => {
@@ -70,7 +70,7 @@ describe("Hero", () => {
     render(<Hero />)
 
     const wrapper = screen.getByAltText("Advogado Hélio Kleison").closest(".relative")
-    expect(wrapper?.className).toMatch(/\bmd:-mb-32\b/)
+    expect(wrapper?.className).toMatch(/\bmd:-mb-16\b/)
   })
 
   it("não tem violações de acessibilidade", async () => {

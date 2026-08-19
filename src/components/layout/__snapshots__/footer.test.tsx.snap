@@ -33,27 +33,21 @@ exports[`Footer > snapshot 1`] = `
       </span>
       <a
         class="text-sm text-muted-foreground transition-colors hover:text-gold-light"
-        href="#atuacao"
+        href="/areas-de-atuacao"
       >
         Áreas de Atuação
       </a>
       <a
         class="text-sm text-muted-foreground transition-colors hover:text-gold-light"
-        href="#sobre"
+        href="/sobre"
       >
         Sobre o Advogado
       </a>
       <a
         class="text-sm text-muted-foreground transition-colors hover:text-gold-light"
-        href="#faq"
+        href="/contato"
       >
-        Dúvidas Frequentes
-      </a>
-      <a
-        class="text-sm text-muted-foreground transition-colors hover:text-gold-light"
-        href="#contato"
-      >
-        Contato
+        FAQ/Contato
       </a>
     </nav>
     <div

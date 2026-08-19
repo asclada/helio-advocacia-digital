@@ -31,13 +31,20 @@ describe("Header", () => {
     expect(screen.getByText(/advocacia.*consultoria/i)).toBeInTheDocument()
   })
 
-  it("renderiza os 4 links do nav com os hrefs corretos", () => {
+  it("o logo (HK + nome) é um link para a Home", () => {
+    render(<Header />)
+
+    const logo = screen.getByText("Helio Kleison").closest("a")
+    expect(logo).toHaveAttribute("href", "/")
+  })
+
+  it("renderiza os 3 links do nav com os hrefs corretos", () => {
     render(<Header />)
 
     for (const anchor of NAV_ANCHORS) {
       expect(
         screen.getByRole("link", { name: anchor.headerLabel })
-      ).toHaveAttribute("href", `#${anchor.id}`)
+      ).toHaveAttribute("href", anchor.href)
     }
   })
 
@@ -78,7 +85,7 @@ describe("Header", () => {
     expect(activeLink).toHaveAttribute("aria-current", "true")
     expect(activeLink.className).toMatch(/\btext-gold-light\b/)
 
-    const inactiveLink = screen.getByRole("link", { name: "Contato" })
+    const inactiveLink = screen.getByRole("link", { name: "FAQ/Contato" })
     expect(inactiveLink).not.toHaveAttribute("aria-current")
   })
 

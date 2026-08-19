@@ -12,20 +12,20 @@ exports[`Field — composição completa > snapshot no estado inválido > estado
     data-invalid=""
     data-slot="field-label"
     data-touched=""
-    for="base-ui-_r_1b_"
-    id="base-ui-_r_1c_"
+    for="base-ui-_r_1h_"
+    id="base-ui-_r_1i_"
   >
     Nome completo
   </label>
   <input
-    aria-describedby="base-ui-_r_1e_ base-ui-_r_1f_"
+    aria-describedby="base-ui-_r_1k_ base-ui-_r_1l_"
     aria-invalid="true"
-    aria-labelledby="base-ui-_r_1c_"
+    aria-labelledby="base-ui-_r_1i_"
     class="flex h-9 w-full min-w-0 rounded-lg border border-muted-foreground bg-transparent px-3 py-1 text-sm text-foreground transition-colors outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 disabled:pointer-events-none disabled:opacity-50"
     data-invalid=""
     data-slot="input"
     data-touched=""
-    id="base-ui-_r_1b_"
+    id="base-ui-_r_1h_"
     placeholder="Seu nome"
     required=""
   />
@@ -34,7 +34,7 @@ exports[`Field — composição completa > snapshot no estado inválido > estado
     data-invalid=""
     data-slot="field-description"
     data-touched=""
-    id="base-ui-_r_1e_"
+    id="base-ui-_r_1k_"
   >
     Como consta no seu documento.
   </p>
@@ -44,7 +44,7 @@ exports[`Field — composição completa > snapshot no estado inválido > estado
     data-slot="field-error"
     data-starting-style=""
     data-touched=""
-    id="base-ui-_r_1f_"
+    id="base-ui-_r_1l_"
   >
     Campo obrigatório.
   </div>
@@ -59,24 +59,24 @@ exports[`Field — composição completa > snapshot no estado padrão > estado-p
   <label
     class="text-sm font-medium text-foreground data-disabled:opacity-50"
     data-slot="field-label"
-    for="base-ui-_r_16_"
-    id="base-ui-_r_17_"
+    for="base-ui-_r_1c_"
+    id="base-ui-_r_1d_"
   >
     Nome completo
   </label>
   <input
-    aria-describedby="base-ui-_r_19_"
-    aria-labelledby="base-ui-_r_17_"
+    aria-describedby="base-ui-_r_1f_"
+    aria-labelledby="base-ui-_r_1d_"
     class="flex h-9 w-full min-w-0 rounded-lg border border-muted-foreground bg-transparent px-3 py-1 text-sm text-foreground transition-colors outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 disabled:pointer-events-none disabled:opacity-50"
     data-slot="input"
-    id="base-ui-_r_16_"
+    id="base-ui-_r_1c_"
     placeholder="Seu nome"
     required=""
   />
   <p
     class="text-sm text-muted-foreground"
     data-slot="field-description"
-    id="base-ui-_r_19_"
+    id="base-ui-_r_1f_"
   >
     Como consta no seu documento.
   </p>

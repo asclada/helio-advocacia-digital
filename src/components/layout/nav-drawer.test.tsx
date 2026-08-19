@@ -13,7 +13,7 @@ describe("NavDrawer", () => {
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
   })
 
-  it("abre ao clicar no botão hambúrguer, mostrando os 4 links e o CTA", async () => {
+  it("abre ao clicar no botão hambúrguer, mostrando os 3 links e o CTA", async () => {
     const user = userEvent.setup()
     render(<NavDrawer />)
 
@@ -23,7 +23,7 @@ describe("NavDrawer", () => {
     for (const anchor of NAV_ANCHORS) {
       expect(
         screen.getByRole("link", { name: anchor.headerLabel })
-      ).toHaveAttribute("href", `#${anchor.id}`)
+      ).toHaveAttribute("href", anchor.href)
     }
     expect(screen.getByRole("link", { name: /fale conosco/i })).toBeInTheDocument()
   })

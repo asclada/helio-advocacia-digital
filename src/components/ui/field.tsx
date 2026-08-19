@@ -12,6 +12,10 @@ function Field({ className, ...props }: FieldPrimitive.Root.Props) {
   )
 }
 
+function FieldControl(props: FieldPrimitive.Control.Props) {
+  return <FieldPrimitive.Control data-slot="field-control" {...props} />
+}
+
 function FieldLabel({ className, ...props }: FieldPrimitive.Label.Props) {
   return (
     <FieldPrimitive.Label
@@ -42,4 +46,4 @@ function FieldError({ className, ...props }: FieldPrimitive.Error.Props) {
   )
 }
 
-export { Field, FieldLabel, FieldDescription, FieldError }
+export { Field, FieldControl, FieldLabel, FieldDescription, FieldError }

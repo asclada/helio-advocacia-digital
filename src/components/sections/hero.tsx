@@ -18,10 +18,10 @@ const HERO_GRID_AREAS =
 
 function Hero() {
   return (
-    <Section as="section" spacing="spacious">
+    <Section as="section" spacing="spacious" className="md:pb-8">
       <div
         className={cn(
-          "grid grid-cols-1 gap-x-12 gap-y-8 md:grid-cols-[13fr_12fr] md:items-end",
+          "grid grid-cols-1 gap-x-12 gap-y-8 md:grid-cols-[1fr_1fr] md:items-end",
           HERO_GRID_AREAS
         )}
       >
@@ -42,7 +42,7 @@ function Hero() {
 
         <div className="[grid-area:cta] flex flex-wrap gap-4">
           <WhatsAppCta size="lg">Falar agora no WhatsApp</WhatsAppCta>
-          <a href="#atuacao" className={cn(buttonVariants({ variant: "secondary" }), "h-10 px-4 text-base")}>
+          <a href="/areas-de-atuacao" className={cn(buttonVariants({ variant: "secondary" }), "h-10 px-4 text-base")}>
             Ver áreas de atuação
           </a>
         </div>
@@ -54,20 +54,15 @@ function Hero() {
         </div>
 
         {/*
-          `md:-mb-32` cancela exatamente o `md:py-32` (padding-bottom) do
-          `Section` (spacing="spacious") — não é um valor arbitrário, é o
-          mesmo token, propositalmente igual, pra puxar o retrato até a
-          borda inferior real do Hero (fronteira com a próxima seção),
-          sem depender de position:absolute nem de nada da seção
-          seguinte. `md:items-end` no grid (acima) alinha o retrato à
-          base do próprio grid antes dessa margem negativa "vazar" o
-          resto. O texto/CTAs/badges não são afetados — o padding do
-          Section continua intacto para eles, só o retrato ignora essa
-          faixa. Se `spacing="spacious"` mudar de valor um dia, este
-          `-mb-32` precisa mudar junto (mesmo padrão de acoplamento
-          manual já usado em `--header-height`/`HEADER_HEIGHT_PX`).
+          `md:-mb-8` cancela exatamente o `md:pb-8` (override do
+          padding-bottom do Section, ver acima — reduzido do `md:py-32`
+          original de spacing="spacious" a pedido do Lucas, pra o retrato
+          subir e ficar numa altura mais próxima da coluna de texto) —
+          se o `pb-8` do Section mudar de valor, este `-mb-8` precisa
+          mudar junto (mesmo padrão de acoplamento manual já usado em
+          `--header-height`/`HEADER_HEIGHT_PX`).
         */}
-        <div className="[grid-area:image] relative w-full md:-mb-32">
+        <div className="[grid-area:image] relative w-full md:-mb-8">
           <div
             aria-hidden="true"
             className="absolute inset-8 -z-10 rounded-full bg-gold/10 blur-3xl"

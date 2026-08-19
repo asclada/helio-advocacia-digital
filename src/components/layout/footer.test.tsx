@@ -26,13 +26,13 @@ describe("Footer", () => {
     ).toMatch(/\btext-gold-light\b/)
   })
 
-  it("renderiza os 4 links de navegação com os footerLabels e hrefs corretos", () => {
+  it("renderiza os 3 links de navegação com os footerLabels e hrefs corretos", () => {
     render(<Footer />)
 
     for (const anchor of NAV_ANCHORS) {
       expect(
         screen.getByRole("link", { name: anchor.footerLabel })
-      ).toHaveAttribute("href", `#${anchor.id}`)
+      ).toHaveAttribute("href", anchor.href)
     }
   })
 

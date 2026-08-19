@@ -28,7 +28,7 @@ function Footer() {
           {NAV_ANCHORS.map((anchor) => (
             <a
               key={anchor.id}
-              href={`#${anchor.id}`}
+              href={anchor.href}
               className="text-sm text-muted-foreground transition-colors hover:text-gold-light"
             >
               {anchor.footerLabel}

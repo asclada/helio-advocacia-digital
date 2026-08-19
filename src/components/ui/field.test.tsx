@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event"
 import { axe } from "jest-axe"
 import { describe, expect, it } from "vitest"
 
-import { Field, FieldDescription, FieldError, FieldLabel } from "@/components/ui/field"
+import { Field, FieldControl, FieldDescription, FieldError, FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 
 describe("Field", () => {
@@ -27,6 +27,30 @@ describe("FieldLabel + Input — associação automática", () => {
     )
 
     expect(screen.getByLabelText("Nome completo").tagName).toBe("INPUT")
+  })
+})
+
+describe("FieldControl — ponte pra elementos nativos sem primitivo Base UI", () => {
+  it("associa id/aria-labelledby a um <textarea> nativo via render", () => {
+    render(
+      <Field>
+        <FieldLabel>Mensagem</FieldLabel>
+        <FieldControl render={<textarea />} />
+      </Field>
+    )
+
+    expect(screen.getByLabelText("Mensagem").tagName).toBe("TEXTAREA")
+  })
+
+  it("associa id/aria-labelledby a um <select> nativo via render", () => {
+    render(
+      <Field>
+        <FieldLabel>Assunto</FieldLabel>
+        <FieldControl render={<select><option>Opção</option></select>} />
+      </Field>
+    )
+
+    expect(screen.getByLabelText("Assunto").tagName).toBe("SELECT")
   })
 })
 

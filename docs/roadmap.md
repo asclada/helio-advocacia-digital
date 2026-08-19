@@ -28,7 +28,7 @@ O projeto é simultaneamente entrega real para o cliente e laboratório de apren
 | 1 | Design System | ✅ Concluída |
 | 2 | Componentes de UI Base | ✅ Concluída |
 | 3 | Header, Nav e Footer | ✅ Concluída |
-| 4 | Montagem das páginas do site | ⏳ Não iniciada |
+| 4 | Montagem das páginas do site | ✅ Concluída |
 | 5 | Supabase — banco do CRM | ⏳ Não iniciada |
 | 6 | CRM — painel autenticado | ⏳ Não iniciada |
 | 7 | n8n — migração do agente de IA | ⏳ Não iniciada |
@@ -110,20 +110,24 @@ O projeto é simultaneamente entrega real para o cliente e laboratório de apren
 
 ---
 
-## Fase 4 — Montagem das páginas do site ⏳
+## Fase 4 — Montagem das páginas do site ✅
 
 **Objetivo:** montar as páginas reais (Home, Sobre, Áreas de Atuação, Contato) usando os componentes prontos, com o conteúdo jurídico já existente (reaproveitado da Fase 0).
 
-**Decisão de arquitetura (fechada na sessão da Fase 4.1):** o site deixa de ser single-page com âncoras (padrão da Fase 3) e passa a ser **Home enxuta + páginas dedicadas** (`/`, `/sobre`, `/areas-de-atuacao`, `/contato`), usando rotas nativas do App Router — melhor indexação no Google para buscas locais do que uma âncora só. A Home contém versões resumidas de cada seção, cada uma linkando para sua página dedicada.
+**Decisão de arquitetura (fechada na sessão da Fase 4.1, confirmada na 4.5):** o site deixa de ser single-page com âncoras (padrão da Fase 3) e passa a ser **Home enxuta + páginas dedicadas** (`/`, `/sobre`, `/areas-de-atuacao`, `/contato`), usando rotas nativas do App Router — melhor indexação no Google para buscas locais do que uma âncora só. A Home contém versões resumidas de cada seção, cada uma linkando para sua página dedicada. Toda a navegação (Header, Footer, drawer mobile, CTA do Hero) usa as rotas reais, não mais âncoras.
 
 **Checkpoints:**
-- [x] **Fase 4.1 — Hero da Home** — headline em frase única (Playfair Display, tipografia uniforme, destaque dourado só em "patrimônio"), retrato do Dr. Hélio com fundo removido e ancorado na borda inferior do Hero, CTA duplo (WhatsApp + âncora `#atuacao`), selo de confiança. Spec: `docs/specs/fase4-1-hero.md` (4 rodadas de ajuste pós-revisão visual documentadas). Testado (9 testes novos, `jest-axe` sem violações), documentado — commit pendente de aprovação.
-- [ ] **Fase 4.2** — Seção "Áreas de Atuação" (resumo/carrossel na Home)
-- [ ] **Fase 4.3** — Seção "Sobre" (resumo na Home)
-- [ ] **Fase 4.4** — CTA/Contato na Home
-- [ ] **Fase 4.5+** — Páginas dedicadas (`/sobre`, `/areas-de-atuacao`, `/contato`), uma spec por página
+- [x] **Fase 4.1 — Hero da Home** — headline em frase única (Playfair Display, tipografia uniforme, destaque dourado só em "patrimônio"), retrato do Dr. Hélio com fundo removido e ancorado na borda inferior do Hero, CTA duplo (WhatsApp + rota `/areas-de-atuacao`), selo de confiança. Spec: `docs/specs/fase4-1-hero.md` (4 rodadas de ajuste pós-revisão visual documentadas).
+- [x] **Fase 4.2 — Áreas de Atuação** (resumo na Home) — grid estático de 3 cards (decisão: substitui o carrossel cogitado na Fase 3), hover com elevação + moldura dourada, componente `SectionHeading` criado (reaproveitado pelas sub-fases seguintes). Spec: `docs/specs/fase4-2-areas-atuacao.md`.
+- [x] **Fase 4.3 — Sobre** (resumo na Home) — retrato circular (mesma foto original do Hero, sem tratamento novo), 2 parágrafos + 3 selos de credencial. Spec: `docs/specs/fase4-3-sobre.md`.
+- [x] **Fase 4.4 — Dúvidas Frequentes + Contato** (resumo na Home) — accordion de FAQ (`@base-ui/react/accordion`) e formulário de contato completo com validação nativa (`Field`/`Form` do Base UI), sem envio real ainda (aguarda integração n8n da Fase 7). Primeiros Client Components do projeto — TDD completo (ciclo red/green real). Spec: `docs/specs/fase4-4-faq-contato.md`.
+- [x] **Fase 4.5 — Páginas dedicadas** (`/areas-de-atuacao`, `/sobre`, `/contato`) — reaproveitam o conteúdo já aprovado da Home (sem copy jurídica nova), cada uma com `<title>`/`description` própria. Nav reduzido de 4 para 3 itens ("Dúvidas" e "Contato" unificados em "FAQ/Contato", já que levavam pro mesmo lugar — libera um slot pro nav para um assunto futuro, ex: blog). Spec: `docs/specs/fase4-5-paginas-dedicadas.md`.
+
+**Entregue:** site institucional completo — Home (Hero + Áreas de Atuação + Sobre + FAQ/Contato) e as 3 páginas dedicadas, com SEO próprio por página, navegação 100% funcional entre elas, e formulário de contato com validação real (envio pendente da Fase 7). 200 testes passando no total, `jest-axe` sem violações em nenhuma página, `tsc`/`lint` limpos.
 
 CTA continua apontando para WhatsApp até o widget da Fase 8 estar pronto. Deploy como preview na Vercel, não produção ainda.
+
+**Registro:** handoffs e specs da Fase 4 em `docs/handoffs/` e `docs/specs/fase4-*.md`.
 
 ---
 

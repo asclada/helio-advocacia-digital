@@ -41,7 +41,7 @@ function NavDrawer() {
             {NAV_ANCHORS.map((anchor) => (
               <a
                 key={anchor.id}
-                href={`#${anchor.id}`}
+                href={anchor.href}
                 onClick={() => setOpen(false)}
                 className="text-lg text-foreground transition-colors hover:text-gold-light"
               >

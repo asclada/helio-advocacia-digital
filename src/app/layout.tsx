@@ -26,7 +26,10 @@ const cormorantGaramond = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "Advogado Hélio Kleison",
+  title: {
+    default: "Helio Kleison Advocacia",
+    template: "%s | Helio Kleison Advocacia",
+  },
   description: "Escritório de advocacia Hélio Kleison",
 };
 

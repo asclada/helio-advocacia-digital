@@ -1,5 +1,7 @@
 "use client"
 
+import Link from "next/link"
+
 import { Container } from "@/components/ui/container"
 import { WhatsAppCta } from "@/components/ui/whatsapp-cta"
 import { useActiveSection } from "@/hooks/use-active-section"
@@ -26,7 +28,7 @@ function Header() {
       )}
     >
       <Container className="flex h-full items-center justify-between gap-6">
-        <a href="#" className="flex items-center gap-3">
+        <Link href="/" className="flex items-center gap-3">
           <span aria-hidden="true" className="font-display text-lg text-gold">
             HK
           </span>
@@ -38,7 +40,7 @@ function Header() {
               ADVOCACIA &amp; CONSULTORIA
             </span>
           </span>
-        </a>
+        </Link>
 
         <nav aria-label="Navegação principal" className="hidden items-center gap-6 md:flex">
           {NAV_ANCHORS.map((anchor) => {
@@ -46,7 +48,7 @@ function Header() {
             return (
               <a
                 key={anchor.id}
-                href={`#${anchor.id}`}
+                href={anchor.href}
                 aria-current={isActive ? "true" : undefined}
                 className={cn(
                   "text-base font-medium transition-colors",

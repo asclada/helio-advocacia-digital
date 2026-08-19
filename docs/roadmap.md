@@ -160,6 +160,12 @@ CTA continua apontando para WhatsApp até o widget da Fase 8 estar pronto. Deplo
 
 **Registro:** spec e handoff no repo do CRM — `helio-advocacia-crm/docs/specs/fase6-painel-autenticado.md` e `helio-advocacia-crm/docs/handoffs/2026-08-19-fase6-painel-autenticado.md`.
 
+### Fase 6.1 — Arquivamento de leads ✅
+
+Extensão direta do painel da Fase 6 (não é a Fase 7 abaixo, que continua sendo a migração do agente n8n): primeira mutação de dado do painel — botão "Arquivar cliente" no detalhe do lead, com modal de confirmação, nova rota `/clientes/arquivados` e item correspondente na sidebar. Achado relevante: nenhuma migration de schema foi necessária — o valor `'arquivado'` em `leads.status` e a permissão de `UPDATE` para usuários autenticados já existiam desde a migration da Fase 5, então todo o trabalho ficou restrito a código de aplicação. Testes automatizados restritos ao essencial (fluxo de arquivar e filtro parametrizado da tabela), decisão explícita do Lucas para agilizar uma fase pequena. Verificado manualmente pelo Lucas com um lead de teste inserido via SQL direto no Supabase (não existe, e não deveria existir, forma de criar lead pela UI — só o n8n grava leads reais).
+
+**Registro:** spec no repo do CRM — `helio-advocacia-crm/docs/specs/fase6.1-arquivamento-leads.md`.
+
 ---
 
 ## Fase 7 — n8n — migração do agente de IA ⏳

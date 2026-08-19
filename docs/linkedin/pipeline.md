@@ -55,6 +55,7 @@ O post foi efetivamente publicado no LinkedIn. Estado final do candidato.
 - [Link ou botão? Um aviso do console que quase virou o bug errado](candidates/2026-08-18-whatsapp-cta-link-vs-button-role.md) — 2026-08-18, Fase 3 (Header/CTA de WhatsApp)
 - [O "bug" que só existia porque a aba estava em segundo plano](candidates/2026-08-18-intersection-observer-hidden-tab.md) — 2026-08-18, Fase 3 (Header/scroll-spy)
 - [Primeiro painel autenticado do projeto: Next.js + Supabase Auth + RLS](candidates/2026-08-19-fase6-painel-autenticado-crm.md) — 2026-08-19, Fase 6 (painel autenticado, repo do CRM)
+- [Conferir o código real evitou duas migrações desnecessárias na mesma sessão](candidates/2026-08-19-verificar-schema-antes-de-assumir.md) — 2026-08-19, Fase 6.1 (arquivamento de leads, repo do CRM)
 
 ### Evaluating
 _Vazia._

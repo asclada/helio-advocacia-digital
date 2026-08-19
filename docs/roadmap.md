@@ -166,6 +166,26 @@ Extensão direta do painel da Fase 6 (não é a Fase 7 abaixo, que continua send
 
 **Registro:** spec no repo do CRM — `helio-advocacia-crm/docs/specs/fase6.1-arquivamento-leads.md`.
 
+### Fase 6.2 — Campo Resumo + modal de triagem completa ✅
+
+Segunda extensão direta do painel da Fase 6, motivada por dois pedidos
+do Lucas que surgiram ao verificar manualmente a 6.1: um campo novo
+`leads.resumo` (síntese da triagem, preenchido pelo agente de IA só a
+partir da Fase 7 — aqui a coluna nasce vazia) com fallback "Cliente não
+detalhou o problema" quando vazio, e a troca da navegação de
+`/clientes/[id]` (página cheia) por um painel lateral (`Sheet`) com
+estado local, aberto ao clicar numa linha em `/clientes` ou
+`/clientes/arquivados`, sem mudar a URL — a rota `/clientes/[id]` foi
+removida. O botão "Arquivar cliente" (Fase 6.1) migrou para dentro
+desse painel e passou a só aparecer quando o lead ainda não está
+arquivado (achado da fase: sem essa regra, o botão apareceria também
+sobre leads já arquivados, sem ação válida). TDD completo (diferente da
+6.1) — 41 testes passando, `jest-axe` no painel, `tsc`/`lint`/`build`
+limpos. Verificado manualmente pelo Lucas com leads de teste inseridos
+via SQL, incluindo um com `resumo` preenchido e outro sem.
+
+**Registro:** spec no repo do CRM — `helio-advocacia-crm/docs/specs/fase6.2-resumo-e-modal-triagem.md`.
+
 ---
 
 ## Fase 7 — n8n — migração do agente de IA ⏳

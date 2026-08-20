@@ -243,10 +243,5 @@ exports[`Footer > snapshot 1`] = `
       </p>
     </div>
   </div>
-  <div
-    aria-hidden="true"
-    class="fixed right-6 bottom-6 z-(--z-chat-widget)"
-    data-slot="chat-widget-reserve"
-  />
 </footer>
 `;

@@ -102,17 +102,6 @@ function Footer() {
           </p>
         </Container>
       </div>
-
-      {/*
-        Reserva de espaço/z-index para o widget de chat AI da Fase 8 (ver
-        docs/specs/fase3-header-nav-footer.md, 3.2). Nenhuma lógica ou
-        conteúdo é implementado aqui — só o token de posição/z-index.
-      */}
-      <div
-        data-slot="chat-widget-reserve"
-        aria-hidden="true"
-        className="fixed right-6 bottom-6 z-(--z-chat-widget)"
-      />
     </footer>
   )
 }

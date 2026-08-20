@@ -100,15 +100,6 @@ describe("Footer", () => {
     expect(screen.getByText(/não configuram publicidade irregular/i)).toBeInTheDocument()
   })
 
-  it("reserva o espaço/z-index do futuro widget de chat, sem nenhum conteúdo", () => {
-    const { container } = render(<Footer />)
-
-    const reserved = container.querySelector('[data-slot="chat-widget-reserve"]')
-    expect(reserved).toBeInTheDocument()
-    expect(reserved).toBeEmptyDOMElement()
-    expect(reserved?.className).toMatch(/\bz-\(--z-chat-widget\)/)
-  })
-
   it("não tem violações de acessibilidade", async () => {
     const { container } = render(<Footer />)
 

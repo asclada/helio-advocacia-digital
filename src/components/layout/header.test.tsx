@@ -26,7 +26,8 @@ describe("Header", () => {
   it("renderiza o logo (monograma, nome e tagline)", () => {
     render(<Header />)
 
-    expect(screen.getByText("HK")).toBeInTheDocument()
+    const monograma = screen.getByRole("banner").querySelector("img")
+    expect(monograma).toHaveAttribute("src", expect.stringContaining("submarca-hk"))
     expect(screen.getByText("Helio Kleison")).toBeInTheDocument()
     expect(screen.getByText(/advocacia.*consultoria/i)).toBeInTheDocument()
   })

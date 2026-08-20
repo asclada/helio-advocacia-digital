@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
 
 import { Container } from "@/components/ui/container"
@@ -29,9 +30,14 @@ function Header() {
     >
       <Container className="flex h-full items-center justify-between gap-6">
         <Link href="/" className="flex items-center gap-3">
-          <span aria-hidden="true" className="font-display text-lg text-gold">
-            HK
-          </span>
+          <Image
+            src="/images/submarca-hk.png"
+            alt=""
+            width={800}
+            height={800}
+            priority
+            className="size-10"
+          />
           <span className="flex flex-col leading-tight">
             <span className="font-display text-base font-semibold text-foreground">
               Helio Kleison

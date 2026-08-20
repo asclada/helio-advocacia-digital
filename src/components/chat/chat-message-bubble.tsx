@@ -39,7 +39,7 @@ function ChatMessageBubble({ mensagem }: { mensagem: ChatMessage }) {
       */}
       <div
         className={cn(
-          "max-w-[80%] rounded-2xl px-4 py-2 text-sm whitespace-pre-wrap",
+          "max-w-[80%] rounded-2xl px-4 py-2 text-sm whitespace-pre-wrap break-words",
           isUsuario
             ? "bg-gold text-primary-foreground"
             : "bg-navy-line text-foreground"

@@ -33,7 +33,7 @@ O projeto é simultaneamente entrega real para o cliente e laboratório de apren
 | 6 | CRM — painel autenticado | ✅ Concluída |
 | 7 | n8n — migração do agente de IA | ✅ Concluída |
 | 8 | Widget de chat no site | ✅ Concluída |
-| 9 | Integração ponta a ponta | 🔶 Etapa A concluída — Etapa B (e-mail) pendente |
+| 9 | Integração ponta a ponta | ✅ Concluída |
 | 10 | Deploy de produção e QA final | ⏳ Não iniciada |
 
 ---
@@ -246,9 +246,13 @@ Site publicado no Vercel percorrido em desktop e celular real; os 6 cenários da
 
 **Checkpoint da Etapa A:** todos os itens acima verificados e corrigidos — **aprovado por Lucas em 2026-08-20**. Etapa B liberada para começar.
 
-### Etapa B — Notificação por e-mail ⏳
+### Etapa B — Notificação por e-mail ✅
 
-Ainda não iniciada. Escopo definido na spec (seção 2.5): e-mail só para o Dr. Helio, via nó SMTP/Gmail nativo do n8n, disparado logo após o guard estrutural de conclusão da Fase 7, com degradação graciosa se o campo `resumo` não vier populado. Reverificação restrita aos cenários "completa" e "só e-mail" (únicos que passam pelo ponto onde o nó de e-mail atua).
+Nó nativo de e-mail do n8n (`n8n-nodes-base.emailSend`, credencial SMTP/Gmail) adicionado logo após o node `Grava Lead no CRM` — mesmo ponto do guard estrutural da Fase 7 (INSERT só ocorre com telefone e/ou e-mail presente). Destinatário único: Dr. Hélio (`heliokleison.advocacia@gmail.com`). Conteúdo: nome, telefone, e-mail, área de interesse e resumo (quando populado, via expressão que omite a linha sem travar o envio caso ausente).
+
+**Verificação:** cenário "completa" (com telefone) e "só e-mail" (sem telefone) reexecutados pelo widget real — e-mail aceito pelo Gmail (`250 2.0.0 OK`) nos dois casos, com os campos corretos (inclusive `Telefone: nao informado` no cenário sem telefone). Teste negativo: mensagem intermediária de uma triagem e uma recusa total, ambas confirmadas roteando para o branch residual sem tocar `Grava Lead no CRM` nem o nó de e-mail — sem regressão no guard `[[TRIAGEM_CONCLUIDA]]`.
+
+**Mudança de produção:** aplicada via script (padrão Fase 7/8/Etapa A) em `D:/n8n-fase9-ajustes/` (fora do Git), com backup do workflow antes e depois.
 
 **Registro:** spec em `docs/specs/fase9-integracao-ponta-a-ponta.md`; handoff em `docs/handoffs/2026-08-20-fase9-etapa-a.md`.
 

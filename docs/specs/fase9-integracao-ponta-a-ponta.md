@@ -134,12 +134,13 @@ Executada por último, depois de Etapa A e Etapa B completas.
 
 ### Aceite Etapa B
 
-- [ ] E-mail de notificação chega ao Dr. Hélio quando um lead é concluído,
+- [x] E-mail de notificação chega ao Dr. Hélio quando um lead é concluído,
       com os campos definidos na seção 2.5.
-- [ ] E-mail **não** dispara em triagens abandonadas/fora de escopo.
-- [ ] Cenários "completa" e "só e-mail" reexecutados após a mudança no n8n,
+- [x] E-mail **não** dispara em triagens abandonadas/fora de escopo.
+- [x] Cenários "completa" e "só e-mail" reexecutados após a mudança no n8n,
       confirmando disparo do e-mail e ausência de regressão no guard
       estrutural do `[[TRIAGEM_CONCLUIDA]]`.
-- [ ] Backup do workflow do n8n preservado (antes e depois da mudança).
-- [ ] Todo dado de teste gerado nesta fase (e o lote acumulado de
-      Fases 7-8) limpo do Supabase antes de encerrar a fase.
+- [x] Backup do workflow do n8n preservado (antes e depois da mudança).
+- [x] Todo dado de teste gerado nesta fase (e o lote acumulado de
+      Fases 7-8) limpo do Supabase antes de encerrar a fase — SQL
+      executado por Lucas em 2026-08-20.

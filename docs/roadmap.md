@@ -33,7 +33,7 @@ O projeto é simultaneamente entrega real para o cliente e laboratório de apren
 | 6 | CRM — painel autenticado | ✅ Concluída |
 | 7 | n8n — migração do agente de IA | ✅ Concluída |
 | 8 | Widget de chat no site | ✅ Concluída |
-| 9 | Integração ponta a ponta | ⏳ Não iniciada |
+| 9 | Integração ponta a ponta | 🔶 Etapa A concluída — Etapa B (e-mail) pendente |
 | 10 | Deploy de produção e QA final | ⏳ Não iniciada |
 
 ---
@@ -225,9 +225,32 @@ via SQL, incluindo um com `resumo` preenchido e outro sem.
 
 ---
 
-## Fase 9 — Integração ponta a ponta ⏳
+## Fase 9 — Integração ponta a ponta 🔶
 
 **Objetivo:** validar o fluxo completo funcionando: usuário conversa no widget → n8n processa com IA → dados gravados no Supabase → advogado/secretária veem no CRM → notificação (e-mail) disparada.
+
+**Escopo real (spec em `docs/specs/fase9-integracao-ponta-a-ponta.md`):** dividido em duas etapas sequenciais — Etapa A (validação do sistema existente, sem código novo) e Etapa B (notificação por e-mail, funcionalidade nova identificada faltando no objetivo original da fase), com checkpoint de aprovação explícita entre as duas. Motivo do sequenciamento: a Etapa B mexe no workflow de produção do n8n, o mesmo já com guards estruturais sensíveis da Fase 7 — isolar as duas evita confundir regressão do sistema existente com bug da feature nova.
+
+### Etapa A — Validação do sistema existente ✅
+
+Site publicado no Vercel percorrido em desktop e celular real; os 6 cenários da Fase 7 (completa, retomada, fora de escopo, ignora-telefone-depois-fornece, recusa total, só e-mail) reexecutados pelo widget de verdade, com verificação campo-a-campo no Supabase e no CRM; retomada de conversa pós-Fase 8 reconfirmada.
+
+**Três bugs reais encontrados e corrigidos durante os testes:**
+1. **`N8N_WEBHOOK_URL` não configurada em produção na Vercel** — só existia no `.env` local; o widget inteiro respondia 500 em qualquer mensagem, para qualquer visitante real do site. Bug bloqueante, encontrado na primeira mensagem de teste. Corrigido por Lucas direto no dashboard da Vercel (variável de ambiente + redeploy).
+2. **Agente pulava nome/LGPD/telefone (Blocos 0/0.1/0.2) quando a primeira mensagem já descrevia o problema com clareza** — causa raiz: a regra "Reconhecimento de mensagem vinda de anúncio" do Bloco A (criada para tráfego pago do WhatsApp) instruía "siga direto para o Bloco B" sem deixar explícito que essa exceção afeta só a pergunta do Bloco A, não os blocos anteriores. O modelo generalizou de forma inconsistente (Cenário 1 não pulou, Cenário 6 pulou) — mesma categoria de ambiguidade de prompt que já tinha causado o bug do gate de contato na Fase 7. Mais sério que os desvios de não-determinismo já documentados: o consentimento LGPD chegou a não ser solicitado nem registrado numa conversa real. Corrigido com uma frase de desambiguação explícita no Bloco A (mesmo padrão de "IMPORTANTE"/"REGRA CRÍTICA" já usado na Seção 8), aplicada em produção via script com backup antes/depois (`D:/n8n-fase9-ajustes/`, fora do Git). Revalidado com sucesso no reteste do Cenário 6.
+3. **Bolha de mensagem do chat criava scroll horizontal com texto sem espaços** (ex: e-mail longo digitado pelo usuário) — `whitespace-pre-wrap` (Fase 8) preserva quebras de linha existentes mas não força quebra de um token sem espaços que excede a largura da bolha. Encontrado por Lucas testando pelo celular contra produção. Corrigido com `break-words` em `chat-message-bubble.tsx` — não precisou mexer no tamanho do painel.
+
+**Diagnóstico sem ação corretiva:** a mensagem final de encerramento (resumo + `TRIAGEM_CONCLUIDA`) demorou ~54s numa execução, contra 1-3s do resto da conversa. Investigado via API de execuções do n8n: os ~54s são inteiramente o tempo de geração do Gemini nessa resposta específica (a única do fluxo que gera resumo interno + JSON estruturado de 12 campos + marcador técnico numa única chamada) — todo o resto do workflow (Postgres, roteamento) leva menos de 0,1s. Não é gargalo de infraestrutura; aceito como comportamento esperado, mesma categoria de "não é bug, é como o LLM funciona" já usada para outros itens desta fase.
+
+**Ajuste adicional fora do escopo original da Etapa A, pedido por Lucas no meio da sessão:** logo do header trocado do texto genérico "HK" pela submarca oficial do escritório (recortada do arquivo de referência, fundo transparente para funcionar nos dois estados do header) — mesmo componente serve desktop e mobile.
+
+**Checkpoint da Etapa A:** todos os itens acima verificados e corrigidos — aguardando aprovação explícita de Lucas para iniciar a Etapa B.
+
+### Etapa B — Notificação por e-mail ⏳
+
+Ainda não iniciada. Escopo definido na spec (seção 2.5): e-mail só para o Dr. Helio, via nó SMTP/Gmail nativo do n8n, disparado logo após o guard estrutural de conclusão da Fase 7, com degradação graciosa se o campo `resumo` não vier populado. Reverificação restrita aos cenários "completa" e "só e-mail" (únicos que passam pelo ponto onde o nó de e-mail atua).
+
+**Registro:** spec em `docs/specs/fase9-integracao-ponta-a-ponta.md`; handoff em `docs/handoffs/2026-08-20-fase9-etapa-a.md`.
 
 ---
 

@@ -1,4 +1,5 @@
 import { Mail, MapPin, Scale } from "lucide-react"
+import Link from "next/link"
 
 import { Container } from "@/components/ui/container"
 import { FacebookIcon, InstagramIcon } from "@/components/ui/social-icons"
@@ -26,13 +27,13 @@ function Footer() {
             Navegação
           </span>
           {NAV_ANCHORS.map((anchor) => (
-            <a
+            <Link
               key={anchor.id}
               href={anchor.href}
               className="text-sm text-muted-foreground transition-colors hover:text-gold-light"
             >
               {anchor.footerLabel}
-            </a>
+            </Link>
           ))}
         </nav>
 

@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 
 import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
@@ -42,9 +43,9 @@ function Hero() {
 
         <div className="[grid-area:cta] flex flex-wrap gap-4">
           <WhatsAppCta size="lg">Falar agora no WhatsApp</WhatsAppCta>
-          <a href="/areas-de-atuacao" className={cn(buttonVariants({ variant: "secondary" }), "h-10 px-4 text-base")}>
+          <Link href="/areas-de-atuacao" className={cn(buttonVariants({ variant: "secondary" }), "h-10 px-4 text-base")}>
             Ver áreas de atuação
-          </a>
+          </Link>
         </div>
 
         <div className="[grid-area:badges] flex flex-wrap gap-3">

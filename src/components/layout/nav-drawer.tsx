@@ -2,6 +2,7 @@
 
 import { Dialog } from "@base-ui/react/dialog"
 import { Menu, X } from "lucide-react"
+import Link from "next/link"
 import { useState } from "react"
 
 import { WhatsAppCta } from "@/components/ui/whatsapp-cta"
@@ -39,14 +40,14 @@ function NavDrawer() {
 
           <nav aria-label="Navegação mobile" className="flex flex-col gap-6">
             {NAV_ANCHORS.map((anchor) => (
-              <a
+              <Link
                 key={anchor.id}
                 href={anchor.href}
                 onClick={() => setOpen(false)}
                 className="text-lg text-foreground transition-colors hover:text-gold-light"
               >
                 {anchor.headerLabel}
-              </a>
+              </Link>
             ))}
           </nav>
 

@@ -46,7 +46,7 @@ function Header() {
           {NAV_ANCHORS.map((anchor) => {
             const isActive = activeId === anchor.id
             return (
-              <a
+              <Link
                 key={anchor.id}
                 href={anchor.href}
                 aria-current={isActive ? "true" : undefined}
@@ -56,7 +56,7 @@ function Header() {
                 )}
               >
                 {anchor.headerLabel}
-              </a>
+              </Link>
             )
           })}
         </nav>

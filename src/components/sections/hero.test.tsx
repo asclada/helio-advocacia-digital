@@ -60,17 +60,17 @@ describe("Hero", () => {
     expect(screen.getByText("OAB/RN 20.357")).toBeInTheDocument()
   })
 
-  it("renderiza o retrato do Dr. Hélio com alt descritivo", () => {
+  it("renderiza o retrato do Dr. Helio com alt descritivo", () => {
     render(<Hero />)
 
-    expect(screen.getByAltText("Advogado Hélio Kleison")).toBeInTheDocument()
+    expect(screen.getByAltText("Advogado Helio Kleison")).toBeInTheDocument()
   })
 
   it("ancora o retrato na borda inferior do Hero em desktop (margem negativa cancela o padding do Section)", () => {
     render(<Hero />)
 
-    const wrapper = screen.getByAltText("Advogado Hélio Kleison").closest(".relative")
-    expect(wrapper?.className).toMatch(/\bmd:-mb-16\b/)
+    const wrapper = screen.getByAltText("Advogado Helio Kleison").closest(".relative")
+    expect(wrapper?.className).toMatch(/\bmd:-mb-8\b/)
   })
 
   it("não tem violações de acessibilidade", async () => {

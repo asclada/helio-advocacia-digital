@@ -44,7 +44,7 @@ function SectionHeading({
       <p className="text-xs uppercase tracking-[0.3em] text-gold">
         {eyebrow}
       </p>
-      <Tag className="font-display text-3xl font-medium text-foreground sm:text-4xl">
+      <Tag className="font-display text-2xl font-medium text-balance text-foreground sm:text-3xl">
         {title}
       </Tag>
     </div>

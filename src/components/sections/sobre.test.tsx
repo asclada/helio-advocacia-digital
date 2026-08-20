@@ -44,7 +44,7 @@ describe("Sobre", () => {
   it("renderiza a foto com alt descritivo, recortada em círculo", () => {
     render(<Sobre />)
 
-    const image = screen.getByAltText("Advogado Hélio Kleison")
+    const image = screen.getByAltText("Advogado Helio Kleison")
     expect(image.className).toMatch(/\brounded-full\b/)
   })
 
@@ -67,7 +67,7 @@ describe("Sobre", () => {
   it("a foto tem um teto de tamanho (max-w-[22rem]), não ocupa mais a coluna inteira", () => {
     render(<Sobre />)
 
-    const image = screen.getByAltText("Advogado Hélio Kleison")
+    const image = screen.getByAltText("Advogado Helio Kleison")
     expect(image.className).toMatch(/max-w-\[22rem\]/)
   })
 

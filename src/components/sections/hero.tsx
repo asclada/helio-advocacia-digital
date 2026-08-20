@@ -19,7 +19,7 @@ const HERO_GRID_AREAS =
 
 function Hero() {
   return (
-    <Section as="section" spacing="spacious" className="md:pb-8">
+    <Section as="section" spacing="spacious" className="pt-8 md:pt-12 md:pb-8">
       <div
         className={cn(
           "grid grid-cols-1 gap-x-12 gap-y-8 md:grid-cols-[1fr_1fr] md:items-end",
@@ -27,7 +27,7 @@ function Hero() {
         )}
       >
         <div className="[grid-area:text] flex flex-col gap-6">
-          <h1 className="font-display text-4xl font-medium leading-tight text-foreground sm:text-5xl">
+          <h1 className="font-display text-4xl font-medium leading-tight text-balance text-foreground sm:text-5xl">
             Ao seu lado na defesa do seu{" "}
             <span className="text-gold-light">patrimônio</span> contra abusos
             bancários e juros abusivos
@@ -62,6 +62,15 @@ function Hero() {
           se o `pb-8` do Section mudar de valor, este `-mb-8` precisa
           mudar junto (mesmo padrão de acoplamento manual já usado em
           `--header-height`/`HEADER_HEIGHT_PX`).
+
+          No desktop o retrato "nasce" da borda superior da seção seguinte
+          (`border-t border-foreground/5` em `areas-atuacao.tsx`), que a
+          margem negativa acima faz a imagem encostar. No empilhamento
+          mobile essa borda não existe embaixo da foto — sem nada ali o
+          advogado parece flutuar. `BASE_LINE` recria a mesma leitura de
+          chão só no mobile (`md:hidden`), sem tentar colar a foto no CTA:
+          o espaçamento normal do grid é mantido (ver handoff da Fase 8 —
+          encostar no botão foi testado e rejeitado).
         */}
         <div className="[grid-area:image] relative w-full md:-mb-8">
           <div
@@ -70,12 +79,16 @@ function Hero() {
           />
           <Image
             src="/images/dr-helio-portrait.png"
-            alt="Advogado Hélio Kleison"
+            alt="Advogado Helio Kleison"
             width={976}
             height={918}
             preload
             className="h-auto w-full"
           />
+          <div aria-hidden="true" className="md:hidden">
+            <div className="h-px w-full bg-gradient-to-r from-transparent via-foreground/20 to-transparent" />
+            <div className="mx-auto -mt-2 h-4 w-2/3 rounded-[50%] bg-gold/10 blur-md" />
+          </div>
         </div>
       </div>
     </Section>

@@ -32,7 +32,7 @@ function SobreContent({ headingLevel = "h2" }: SobreContentProps) {
     <div className="grid grid-cols-1 gap-10 md:grid-cols-[7fr_13fr] md:items-center">
       <Image
         src="/images/dr-helio-sobre.png"
-        alt="Advogado Hélio Kleison"
+        alt="Advogado Helio Kleison"
         width={976}
         height={918}
         className="mx-auto aspect-square w-full max-w-[22rem] rounded-full object-cover"

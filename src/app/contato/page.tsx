@@ -8,7 +8,7 @@ import { SectionHeading } from "@/components/ui/section-heading";
 export const metadata: Metadata = {
   title: "FAQ/Contato",
   description:
-    "Fale com o escritório Hélio Kleison Advocacia — WhatsApp, e-mail, formulário de contato ou dúvidas frequentes.",
+    "Fale com o escritório Helio Kleison Advocacia — WhatsApp, e-mail, formulário de contato ou dúvidas frequentes.",
 };
 
 export default function ContatoPage() {

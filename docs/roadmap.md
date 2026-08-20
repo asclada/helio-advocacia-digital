@@ -32,7 +32,7 @@ O projeto é simultaneamente entrega real para o cliente e laboratório de apren
 | 5 | Supabase — banco do CRM | ✅ Concluída |
 | 6 | CRM — painel autenticado | ✅ Concluída |
 | 7 | n8n — migração do agente de IA | ✅ Concluída |
-| 8 | Widget de chat no site | ⏳ Não iniciada |
+| 8 | Widget de chat no site | ✅ Concluída |
 | 9 | Integração ponta a ponta | ⏳ Não iniciada |
 | 10 | Deploy de produção e QA final | ⏳ Não iniciada |
 
@@ -202,11 +202,26 @@ via SQL, incluindo um com `resumo` preenchido e outro sem.
 
 ---
 
-## Fase 8 — Widget de chat no site ⏳
+## Fase 8 — Widget de chat no site ✅
 
 **Objetivo:** construir o widget de chat (estilo WhatsApp, pop-up no canto inferior) no site institucional, consumindo o fluxo do n8n já migrado na Fase 7.
 
-**Provável escopo:** UI do widget (usando token de cor e z-index já reservados desde a Fase 1), gestão de `session_id` para manter conversas, estados de loading/erro, envio para o Webhook do n8n.
+**Escopo real (spec em `docs/specs/fase8-widget-chat.md`, enxuta por prazo firme no dia — 4 decisões de design aprovadas por Lucas: chip dourado — não verde do WhatsApp —, painel não-modal sem backdrop, saudação estática sem chamar o backend, testes automatizados restritos ao hook de lógica de negócio):** chip circular fixo + balão de notificação inicial dispensável; painel com header (foto/nome do Dr. Helio), lista de bolhas usuário/agente com timestamp, input e envio; `conversa_id` via `crypto.randomUUID()` (com fallback via `crypto.getRandomValues` para contexto inseguro — ver bugs abaixo) gerado na primeira abertura e persistido em `localStorage`; loading e erro genérico simples; mobile como prioridade real, não só "não quebra".
+
+**Três bugs reais encontrados e corrigidos durante o teste em celular real** (não só cosméticos):
+1. `crypto.randomUUID()` não existe em contexto inseguro (HTTP + IP de rede, não-`localhost`) — travava o clique do widget inteiro sem nenhum feedback visual, e provavelmente também travava o menu lateral (`NavDrawer`, pré-existente desde a Fase 3) como efeito colateral do overlay de erro do Next.js em modo dev. Corrigido com fallback via `crypto.getRandomValues`.
+2. Navegação interna inteira (`Header`, drawer mobile, `Footer`, CTA do Hero) usava `<a href>` puro em vez do `Link` do Next.js, causando reload completo da página a cada troca de rota — isso remontava o widget do zero, apagando a conversa da memória a cada navegação. Trocado por `Link` em todos os pontos; resolve trocar de página, trocar de aba e minimizar o navegador de uma vez (nenhum desses deveria derrubar o React).
+3. Chrome Android não encolhia o layout ao abrir o teclado virtual (`100dvh` não recalculava), escondendo a saudação inicial atrás do teclado — corrigido com `interactiveWidget: "resizes-content"` no viewport do site.
+
+**Ajustes visuais adicionais** (rodadas de revisão pós-implementação, mesmo padrão da Fase 4.1): quebras de linha das respostas do agente preservadas (`whitespace-pre-wrap` — o HTML colapsava os `\n` que o agente já mandava), ênfase `*texto*` do agente convertida para negrito real na UI, linha de base sutil sob o retrato do Hero no mobile (mesma leitura de "chão" que a margem negativa já dava no desktop, sem repetir a técnica que causou sobreposição), chip do widget com brilho pulsante permanente, título do Hero e do `SectionHeading` compartilhado com `text-balance` (evita a última linha curta "flutuando"), nome do escritório sem acento ("Helio", não "Hélio") em todo o site.
+
+**Ajuste no agente do n8n (fora deste repositório, produção):** Seção 8 do system message — texto morto desde a Fase 7 (descrevia o comportamento do Watchdog removido, nunca mais disparava) — substituída por "Retomada de conversa interrompida": o agente reconhece, pela própria memória da conversa (`Simple Memory`/`conversa_id`, sem nó novo no workflow), quando uma mensagem de abertura ("oi") chega numa conversa que já tinha nome coletado, e passa a cumprimentar pelo nome e perguntar se a pessoa quer continuar ou começar uma triagem nova. Nome do escritório corrigido pra "Helio" (sem acento) nas 9 ocorrências do prompt.
+
+**Limitação conhecida (mesma categoria do Watchdog acima — não-determinismo de LLM aceito, não bug):** a retomada funciona de forma confiável quando o reload acontece no meio do fluxo (testado: após dar telefone, dentro do Bloco A). Não funciona de forma confiável na janela estreita entre dar o nome e confirmar o aviso de LGPD (Bloco 0.1) — o agente insiste em pedir a confirmação da LGPD em vez de oferecer a retomada, mesmo com reforço de prioridade explícito (`REGRA CRÍTICA — NÃO QUEBRE`) no prompt. Duas rodadas de ajuste de prompt testadas sem sucesso nesse recorte específico; Lucas decidiu aceitar como limitação por ora, mesmo padrão de "mitigação estrutural, não eliminação" já usado no gate do Bloco H na Fase 7.
+
+**Entregue:** widget de chat completo e funcional em produção, verificado ponta a ponta em desktop e celular real (mensagens reais trocadas com o agente); navegação interna do site inteira migrada para `Link` (correção que também beneficia performance percebida fora do escopo do widget); 208/208 testes passando (incluindo um teste do Hero que estava quebrado desde a Fase 4, corrigido de passagem); `tsc`/`lint`/build limpos.
+
+**Registro:** spec em `docs/specs/fase8-widget-chat.md`; handoff em `docs/handoffs/2026-08-20-fase8-widget-chat.md`.
 
 ---
 
@@ -227,6 +242,7 @@ via SQL, incluindo um com `resumo` preenchido e outro sem.
 ## Pendências conhecidas
 
 - **Watchdog de inatividade** — o agente original (WhatsApp) tinha um mecanismo de acompanhamento que cutucava o cliente depois de 10 minutos sem resposta durante a triagem. Abandonado deliberadamente na Fase 7 (decisão registrada na spec `fase7-n8n-migracao-agente.md`, seção 2): não existe equivalente direto num modelo de request/response HTTP como o webhook do widget, e reconstruir isso exigiria outro mecanismo (polling, SSE) fora do escopo daquela fase. Sem data prevista para retomar — revisar quando/se o abandono de conversas no widget (Fase 8+) se mostrar um problema real de negócio.
+- **Retomada de conversa na janela LGPD** — a saudação de retomada por nome (Fase 8) não dispara de forma confiável quando o reload acontece bem entre dar o nome e confirmar o aviso de LGPD (Bloco 0.1); funciona normalmente em qualquer outro ponto do fluxo. Detalhe técnico completo em `docs/handoffs/2026-08-20-fase8-widget-chat.md`. Sem data prevista para retomar — Lucas decidiu aceitar por ora.
 
 ---
 

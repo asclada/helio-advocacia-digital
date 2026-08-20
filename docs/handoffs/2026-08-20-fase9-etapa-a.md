@@ -5,21 +5,19 @@
 ```
 Estou no projeto Hélio Advocacia Digital. A Etapa A da Fase 9 (validação
 do sistema existente — site publicado, 6 cenários da Fase 7 pelo widget
-real, CRM, retomada de conversa) foi concluída nesta sessão, com 3 bugs
-reais encontrados e corrigidos. Aguardando minha aprovação explícita do
-checkpoint antes de começar a Etapa B (notificação por e-mail).
+real, CRM, retomada de conversa) foi concluída e o checkpoint já foi
+aprovado por mim em 2026-08-20. Pode começar direto pela Etapa B
+(notificação por e-mail).
 
 Antes de começar, leia:
-- docs/roadmap.md — seção Fase 9, com o resumo dos 3 bugs e o estado
-  atual de cada etapa
-- docs/specs/fase9-integracao-ponta-a-ponta.md — spec completa, com a
-  Etapa B (notificação por e-mail) ainda não implementada
+- docs/roadmap.md — seção Fase 9, com o resumo dos 3 bugs da Etapa A e
+  o escopo da Etapa B
+- docs/specs/fase9-integracao-ponta-a-ponta.md — spec completa, seção
+  2.5 tem as decisões de design da Etapa B já aprovadas (destinatário,
+  provedor, gatilho, conteúdo do e-mail)
 - este handoff (2026-08-20-fase9-etapa-a.md) — detalhe técnico completo
-  dos 3 bugs, do diagnóstico de latência, e do ajuste de logo pedido no
-  meio da sessão
-
-Se eu já tiver aprovado o checkpoint da Etapa A (confirme comigo se não
-estiver claro na conversa), pode seguir direto para a Etapa B.
+  dos 3 bugs da Etapa A, do diagnóstico de latência, e do ajuste de logo
+  pedido no meio da sessão
 ```
 
 ## Registro da sessão
@@ -178,10 +176,11 @@ aqui (mesma observação já feita nos handoffs das Fases 7 e 8).
 
 ### Próximo passo imediato
 
-Etapa A concluída e documentada. **Aguardando aprovação explícita de
-Lucas do checkpoint** antes de começar a Etapa B (notificação por
-e-mail) — ver seção 2.5 da spec para as decisões de design já aprovadas
-(destinatário, provedor, gatilho, conteúdo do e-mail).
+Etapa A concluída e documentada. **Checkpoint aprovado por Lucas em
+2026-08-20**, ainda na mesma sessão — próxima sessão começa direto pela
+Etapa B (notificação por e-mail), sem precisar reconfirmar. Ver seção
+2.5 da spec para as decisões de design já aprovadas (destinatário,
+provedor, gatilho, conteúdo do e-mail).
 
 ### Links
 

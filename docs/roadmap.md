@@ -244,7 +244,7 @@ Site publicado no Vercel percorrido em desktop e celular real; os 6 cenários da
 
 **Ajuste adicional fora do escopo original da Etapa A, pedido por Lucas no meio da sessão:** logo do header trocado do texto genérico "HK" pela submarca oficial do escritório (recortada do arquivo de referência, fundo transparente para funcionar nos dois estados do header) — mesmo componente serve desktop e mobile.
 
-**Checkpoint da Etapa A:** todos os itens acima verificados e corrigidos — aguardando aprovação explícita de Lucas para iniciar a Etapa B.
+**Checkpoint da Etapa A:** todos os itens acima verificados e corrigidos — **aprovado por Lucas em 2026-08-20**. Etapa B liberada para começar.
 
 ### Etapa B — Notificação por e-mail ⏳
 

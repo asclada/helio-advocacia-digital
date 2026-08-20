@@ -31,7 +31,7 @@ O projeto é simultaneamente entrega real para o cliente e laboratório de apren
 | 4 | Montagem das páginas do site | ✅ Concluída |
 | 5 | Supabase — banco do CRM | ✅ Concluída |
 | 6 | CRM — painel autenticado | ✅ Concluída |
-| 7 | n8n — migração do agente de IA | ⏳ Não iniciada |
+| 7 | n8n — migração do agente de IA | ✅ Concluída |
 | 8 | Widget de chat no site | ⏳ Não iniciada |
 | 9 | Integração ponta a ponta | ⏳ Não iniciada |
 | 10 | Deploy de produção e QA final | ⏳ Não iniciada |
@@ -188,11 +188,17 @@ via SQL, incluindo um com `resumo` preenchido e outro sem.
 
 ---
 
-## Fase 7 — n8n — migração do agente de IA ⏳
+## Fase 7 — n8n — migração do agente de IA ✅
 
 **Objetivo:** migrar a lógica do agente, hoje conectado via Evolution API (WhatsApp), para receber e responder diretamente do site — o WhatsApp volta a ser atendimento manual.
 
-**Provável escopo:** troca da entrada/saída do fluxo n8n (de Evolution API para Webhook HTTP recebendo do widget do site), mantendo a lógica de IA existente (Gemini), gravando os dados extraídos no Supabase do CRM (Fase 5).
+**Escopo real (spec em `helio-advocacia-crm/docs/specs/fase7-n8n-migracao-agente.md`, revisado e ampliado em conversa ao longo da sessão):** troca da entrada/saída do fluxo n8n (Evolution API → webhook HTTP síncrono consumido pelo `route.ts` do site), nova tabela `triagens` enxuta no Supabase do CRM (credencial Postgres trocada da instância pausada `agente-adv-helio` para o projeto correto), remoção de ~35 nós específicos de WhatsApp/grupo/Watchdog/áudio, e dois pedidos de escopo que entraram no meio da sessão (não previstos na proposta original): (1) saída estruturada em JSON (`DADOS_ESTRUTURADOS`) pro Gemini popular os 8 campos de `leads` que ficariam vazios, e (2) regra de encerramento condicionado a contato — a triagem só conclui com telefone ou e-mail confirmado, dado o lançamento do dia seguinte exigir leads acionáveis desde o primeiro dia.
+
+**Dois bugs reais encontrados e corrigidos durante os testes** (não só cosméticos — ver handoff pra detalhe técnico completo): parâmetros posicionais do Postgres desalinhados quando um valor de texto livre continha vírgula (ex: "Salvador, BA"), corrigido trocando string concatenada por array de parâmetros; e emissão prematura do marcador técnico de conclusão pelo Gemini antes do contato ser de fato coletado, mitigada (não eliminada — é não-determinismo do LLM) com um guard estrutural no Postgres que impede a triagem de ser marcada concluída sem `whatsapp`/`email` presente.
+
+**Entregue:** workflow em produção, ativo, testado ponta a ponta com 6 cenários (completa, retomada, fora de escopo, contato fornecido tardiamente, recusa total, só e-mail) e uma verificação end-to-end real via `route.ts` do site (não só direto contra o n8n). `N8N_WEBHOOK_URL` configurado no site. Watchdog de inatividade abandonado nesta fase, sem substituto — vira pendência futura (ver seção "Pendências" abaixo).
+
+**Registro:** spec e handoff no repo do CRM — `helio-advocacia-crm/docs/specs/fase7-n8n-migracao-agente.md` e `helio-advocacia-crm/docs/handoffs/2026-08-20-fase7-n8n-migracao-agente.md`.
 
 ---
 
@@ -215,6 +221,12 @@ via SQL, incluindo um com `resumo` preenchido e outro sem.
 **Objetivo:** checklist final antes de considerar o projeto pronto para uso real do cliente.
 
 **Provável escopo:** QA de site (desktop/mobile/SEO/acessibilidade/performance), QA de widget (abre/envia/recebe/erro/sessão/encerramento), QA de CRM (login/logout/proteção de rota/permissões/responsividade), QA de backend (webhook/validação/IA/Supabase/e-mail/logs). Troca de domínio/DNS se aplicável.
+
+---
+
+## Pendências conhecidas
+
+- **Watchdog de inatividade** — o agente original (WhatsApp) tinha um mecanismo de acompanhamento que cutucava o cliente depois de 10 minutos sem resposta durante a triagem. Abandonado deliberadamente na Fase 7 (decisão registrada na spec `fase7-n8n-migracao-agente.md`, seção 2): não existe equivalente direto num modelo de request/response HTTP como o webhook do widget, e reconstruir isso exigiria outro mecanismo (polling, SSE) fora do escopo daquela fase. Sem data prevista para retomar — revisar quando/se o abandono de conversas no widget (Fase 8+) se mostrar um problema real de negócio.
 
 ---
 

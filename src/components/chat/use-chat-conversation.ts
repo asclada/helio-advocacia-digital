@@ -2,6 +2,8 @@
 
 import { useRef, useState } from "react"
 
+import { getOrigem } from "@/components/chat/chat-campaign"
+
 export interface ChatMessage {
   id: string
   role: "user" | "agent"
@@ -59,10 +61,15 @@ export function useChatConversation() {
     setError(false)
 
     try {
+      const origem = getOrigem()
+      const payload = origem
+        ? { conversa_id: conversaId, mensagem: texto, origem }
+        : { conversa_id: conversaId, mensagem: texto }
+
       const resposta = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ conversa_id: conversaId, mensagem: texto }),
+        body: JSON.stringify(payload),
       })
 
       if (!resposta.ok) throw new Error("Resposta não-2xx do proxy de chat")

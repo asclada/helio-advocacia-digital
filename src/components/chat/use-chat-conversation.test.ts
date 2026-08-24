@@ -1,6 +1,7 @@
 import { act, renderHook } from "@testing-library/react"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
+import { registrarOrigem } from "@/components/chat/chat-campaign"
 import { useChatConversation } from "@/components/chat/use-chat-conversation"
 
 const STORAGE_KEY = "helio-chat-conversa-id"
@@ -11,6 +12,7 @@ function mockFetchResolvedOnce(response: { ok: boolean; json: () => Promise<unkn
 
 beforeEach(() => {
   localStorage.clear()
+  sessionStorage.clear()
 })
 
 afterEach(() => {
@@ -97,6 +99,39 @@ describe("useChatConversation", () => {
       expect(result.current.mensagens[2]).toMatchObject({ role: "agent", texto: "Parte 2" })
       expect(result.current.loading).toBe(false)
       expect(result.current.error).toBe(false)
+    })
+
+    it("inclui origem no body quando há valor registrado via registrarOrigem", async () => {
+      registrarOrigem("facebook_ads")
+      const fetchMock = vi
+        .fn()
+        .mockResolvedValueOnce({ ok: true, json: async () => ({ respostas: ["ok"] }) } as Response)
+      vi.stubGlobal("fetch", fetchMock)
+
+      const { result } = renderHook(() => useChatConversation())
+
+      await act(async () => {
+        await result.current.sendMessage("Oi")
+      })
+
+      const body = JSON.parse(fetchMock.mock.calls[0][1].body)
+      expect(body.origem).toBe("facebook_ads")
+    })
+
+    it("omite a chave origem do body quando não há valor registrado (tráfego orgânico)", async () => {
+      const fetchMock = vi
+        .fn()
+        .mockResolvedValueOnce({ ok: true, json: async () => ({ respostas: ["ok"] }) } as Response)
+      vi.stubGlobal("fetch", fetchMock)
+
+      const { result } = renderHook(() => useChatConversation())
+
+      await act(async () => {
+        await result.current.sendMessage("Oi")
+      })
+
+      const body = JSON.parse(fetchMock.mock.calls[0][1].body)
+      expect("origem" in body).toBe(false)
     })
 
     it("reusa o mesmo conversa_id em várias chamadas de sendMessage", async () => {

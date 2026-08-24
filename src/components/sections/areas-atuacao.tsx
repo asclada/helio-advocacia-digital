@@ -1,36 +1,24 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Section } from "@/components/ui/section"
 import { SectionHeading } from "@/components/ui/section-heading"
-import { cn } from "@/lib/utils"
 
 const AREAS = [
   {
-    article: "Art. 1º",
     title: "Venda Casada de Seguro",
     description:
       "Contratação de seguro ou produto não solicitado imposta como condição para liberar o empréstimo. Atuação para anular a cobrança e recuperar valores pagos indevidamente.",
   },
   {
-    article: "Art. 2º",
     title: "Empréstimo Fraudado",
     description:
       "Idade adulterada no contrato ou empréstimo lançado em nome de quem nunca o contratou. Defesa para contestar a dívida e reverter os descontos indevidos.",
   },
   {
-    article: "Art. 3º",
     title: "Consignado a Menor de Idade (INSS)",
     description:
       "Crédito consignado liberado por representante legal sem autorização judicial. Atuação para bloquear descontos e reaver os valores cobrados irregularmente.",
   },
 ]
-
-/**
- * Barra vertical dourada antes do "Art. Nº", recriando a classe `.art-rule`
- * do site atual (gradiente gold-light → gold-dark, 2px, opacidade 60% —
- * valores extraídos do CSS computado do site em produção, não estimados).
- */
-const ARTICLE_RULE =
-  "relative pl-[1.1rem] before:absolute before:inset-y-[0.15em] before:left-0 before:w-0.5 before:bg-gradient-to-b before:from-gold-light before:to-gold-dark before:opacity-60 before:content-['']"
 
 interface AreasAtuacaoContentProps {
   /**
@@ -71,9 +59,6 @@ function AreasAtuacaoContent({ headingLevel = "h2" }: AreasAtuacaoContentProps) 
             className="transition duration-[400ms] ease-[cubic-bezier(0.2,0.8,0.2,1)] hover:-translate-y-1.5 hover:border-gold"
           >
             <CardHeader>
-              <p className={cn(ARTICLE_RULE, "font-display text-sm text-gold/60")}>
-                {area.article}
-              </p>
               <CardTitle as={cardTitleLevel}>{area.title}</CardTitle>
             </CardHeader>
             <CardContent>{area.description}</CardContent>

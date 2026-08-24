@@ -17,10 +17,9 @@ describe("AreasAtuacao", () => {
     ).toBeInTheDocument()
   })
 
-  it("renderiza os 3 cards com o prefixo 'Art. Nº' separado do título e texto corretos", () => {
+  it("renderiza os 3 cards com título e texto corretos, sem o prefixo 'Art. Nº'", () => {
     render(<AreasAtuacao />)
 
-    expect(screen.getByText("Art. 1º")).toBeInTheDocument()
     expect(
       screen.getByRole("heading", { level: 3, name: "Venda Casada de Seguro" })
     ).toBeInTheDocument()
@@ -28,7 +27,6 @@ describe("AreasAtuacao", () => {
       screen.getByText(/Contratação de seguro ou produto não solicitado/)
     ).toBeInTheDocument()
 
-    expect(screen.getByText("Art. 2º")).toBeInTheDocument()
     expect(
       screen.getByRole("heading", { level: 3, name: "Empréstimo Fraudado" })
     ).toBeInTheDocument()
@@ -36,7 +34,6 @@ describe("AreasAtuacao", () => {
       screen.getByText(/Idade adulterada no contrato/)
     ).toBeInTheDocument()
 
-    expect(screen.getByText("Art. 3º")).toBeInTheDocument()
     expect(
       screen.getByRole("heading", {
         level: 3,
@@ -46,6 +43,8 @@ describe("AreasAtuacao", () => {
     expect(
       screen.getByText(/Crédito consignado liberado por representante legal/)
     ).toBeInTheDocument()
+
+    expect(screen.queryByText(/Art\.\s*\d/)).not.toBeInTheDocument()
   })
 
   it("cada card tem o hover de elevação + moldura dourada replicado do site atual", () => {

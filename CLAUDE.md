@@ -150,7 +150,75 @@ Decidido na Fase 1 (change `establish-design-system-and-stack`):
 
 ## 13. Última atualização
 
-2026-08-15
+2026-08-24
+
+## 14. Processo de desenvolvimento — Hélio Advocacia Digital
+
+Projeto em produção desde a Fase 10, em 2026-08-24. O processo formal (Plan Mode + SDD + TDD + spec em docs/specs/ + handoff em docs/handoffs/) foi usado nas Fases 1–10 para construção do zero e continua sendo a referência completa em docs/padrao-desenvolvimento.md.
+
+A partir de agora, em manutenção, use o processo COMPLETO apenas quando a mudança se encaixar em pelo menos um destes critérios:
+
+- Mexe em mais de um repositório (site + CRM, ou CRM + banco, etc.)
+- Altera o contrato entre componentes (ex: payload do webhook n8n, schema de tabela do Supabase, contrato de autenticação)
+- Tem risco real de quebrar algo em produção se der errado (ex: mudança em RLS, em fluxo de pagamento, em auth)
+- Envolve uma decisão de arquitetura ou trade-off que vale a pena documentar para o futuro
+
+Para tudo mais — ajustes de UI, correções de bug pontuais, pequenos ajustes de copy, mudanças isoladas em um componente, tweaks de estilo — use o processo LEVE:
+
+- Descreva o problema/ajuste desejado direto no chat, sem necessidade de spec formal.
+- Implemente diretamente (Plan Mode é opcional, só use se a mudança não for óbvia de cara).
+- Teste manualmente (visual ou funcional, conforme o caso) — não é obrigatório escrever teste automatizado novo para ajustes triviais, a menos que já exista um teste cobrindo aquele código.
+- Commit seguindo Conventional Commits (feat:/fix:/chore:/style:), sem handoff formal — uma mensagem de commit descritiva já é documentação suficiente para mudanças pequenas. Isso dispensa só a *documentação* formal (spec/handoff): a aprovação explícita antes de qualquer commit continua valendo sempre, sem exceção, por ser regra global (`~/.claude/CLAUDE.md`).
+- Não é necessário atualizar docs/roadmap.md para cada ajuste pequeno — reserve isso para marcos maiores.
+
+Se ficar em dúvida sobre qual processo usar, pergunte antes de começar em vez de assumir.
+
+## 15. Relatório semanal para o Dr. Hélio
+
+A partir da Fase 10 (projeto em produção), Lucas envia ao Dr. Hélio, toda
+sexta-feira, um relatório curto do que foi entregue na semana (segunda a
+sexta) — parte da proposta de escopo de trabalho aprovada (KLL Promotora +
+HK Advocacia). Este projeto cobre só a parte **HK**, nunca KLL (projeto
+separado, fora deste repositório).
+
+**Onde:** pasta local de relatórios semanais, fora deste repositório —
+material comercial/administrativo, não faz parte do código-fonte, então o
+caminho exato não fica neste arquivo público (registrado só localmente).
+Um arquivo por semana, nomeado pela data da segunda-feira daquela semana —
+ex: `2026-08-24-relatorio-semanal.md`. Se o arquivo da semana corrente
+ainda não existir, crie a partir do modelo de 5 seções (Resultados,
+Sistemas, Tráfego, IA e Automação, Manutenção — mesma estrutura do
+relatório aprovado na proposta).
+
+**Quando adicionar uma linha:** ao concluir, nesta sessão, uma entrega que se
+enquadraria no processo COMPLETO ou LEVE da seção 14 (ou seja, qualquer
+mudança real — não cada pequeno passo intermediário). Também vale para
+trabalho que Lucas descrever ter feito fora da sessão (ex: configuração
+manual no dashboard da Vercel ou do Supabase, ajuste direto no workflow do
+n8n) — registre com base no que ele relatar na conversa.
+
+**Como escrever:** frase curta, direta, em português simples, sem jargão
+técnico — quem lê é o Dr. Hélio, advogado, não desenvolvedor. Descreva o que
+mudou e por que importa, não como foi implementado.
+
+**Em qual seção:**
+- **Sistemas** — mudanças no site, CRM, banco de dados ou integrações entre
+  eles.
+- **IA e Automação** — ajustes no agente (n8n), novas regras, processos que
+  passaram a ser automáticos.
+- **Manutenção** — bugs corrigidos, incidentes resolvidos. Se a semana
+  passar sem nenhum, a linha padrão "Nenhum incidente relevante registrado"
+  já fica no modelo — não precisa mexer.
+
+**Nunca preencher:** as seções **Resultados** (dados de lead do CRM) e
+**Tráfego** (campanhas/custo por lead) — ficam em branco no modelo,
+propositalmente, para Lucas preencher manualmente antes de exportar na
+sexta. Não são dados que nascem de uma sessão de código.
+
+**Fora do escopo desta regra:** consolidação do relatório mensal (Lucas faz
+manualmente juntando as 4 semanas). Mesma regra também existe no `CLAUDE.md`
+do repo do CRM (`helio-advocacia-crm`, seção 6) — os dois repositórios
+alimentam o mesmo arquivo semanal.
 
 <!-- BEGIN:nextjs-agent-rules -->
 

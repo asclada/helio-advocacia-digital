@@ -61,7 +61,14 @@ function ChatWidget() {
 
   return (
     <>
-      <div className="fixed right-6 bottom-6 z-(--z-chat-widget) flex flex-col items-end gap-3">
+      {/*
+        `bottom-28` no mobile evita que a bolha de notificação cubra o
+        rosto do Dr. Helio no retrato do Hero (ele fica na parte de baixo
+        da tela já no carregamento inicial, sem precisar rolar — ver
+        correcao-msg-na-cara.jpg). `md:bottom-6` volta ao valor original
+        no desktop, onde o retrato fica ao lado do texto, não embaixo.
+      */}
+      <div className="fixed right-6 bottom-28 z-(--z-chat-widget) flex flex-col items-end gap-3 md:bottom-6">
         {notificacaoVisivel && (
           <ChatNotificationBubble
             onOpenChat={abrirPainel}

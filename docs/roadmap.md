@@ -34,7 +34,7 @@ O projeto é simultaneamente entrega real para o cliente e laboratório de apren
 | 7 | n8n — migração do agente de IA | ✅ Concluída |
 | 8 | Widget de chat no site | ✅ Concluída |
 | 9 | Integração ponta a ponta | ✅ Concluída |
-| 10 | Deploy de produção e QA final | ⏳ Não iniciada |
+| 10 | Deploy de produção e QA final | ✅ Concluída |
 
 ---
 
@@ -258,11 +258,24 @@ Nó nativo de e-mail do n8n (`n8n-nodes-base.emailSend`, credencial SMTP/Gmail) 
 
 ---
 
-## Fase 10 — Deploy de produção e QA final ⏳
+## Fase 10 — Deploy de produção e QA final ✅
 
-**Objetivo:** checklist final antes de considerar o projeto pronto para uso real do cliente.
+**Objetivo:** cutover para domínio oficial e decisão de plano Vercel, com QA mínimo restrito ao que muda nesta fase. Escopo revisado e enxuto (spec em `docs/specs/fase10-deploy-producao.md`) — prazo firme, site precisava estar no ar ainda em 2026-08-20.
 
-**Provável escopo:** QA de site (desktop/mobile/SEO/acessibilidade/performance), QA de widget (abre/envia/recebe/erro/sessão/encerramento), QA de CRM (login/logout/proteção de rota/permissões/responsividade), QA de backend (webhook/validação/IA/Supabase/e-mail/logs). Troca de domínio/DNS se aplicável.
+**Decisões já tomadas:**
+- Plano Vercel: **Hobby por agora** (decisão consciente, custo recorrente adiado — revisitar depois do lançamento).
+- Pendência da Etapa B da Fase 9 (widget sem timeout/retry): **fica como pendência aceita**, fora de escopo desta fase.
+
+**Progresso:**
+- [x] Domínio `heliokleisonadvocacia.com.br` movido do projeto Vercel do site antigo para o do redesign (`helio-site`) — nameservers já apontavam para a Vercel, sem passo manual no Registro.br.
+- [x] Site confirmado no ar no domínio oficial: SSL válido, conteúdo do redesign carregando, widget de chat testado ponta a ponta com sucesso (mensagem real trocada com o agente, sem erro de CORS/env — `route.ts` não tem lógica amarrada a domínio).
+- [x] CRM deployado pela primeira vez na Vercel (`helio-advocacia-crm`, mesma conta/time do site), env vars `NEXT_PUBLIC_SUPABASE_URL`/`NEXT_PUBLIC_SUPABASE_ANON_KEY` configuradas (`SUPABASE_SERVICE_ROLE_KEY` do `.env.example` do repo confirmada como não usada no código do app — não precisou ser cadastrada).
+- [x] Subdomínio `painel.heliokleisonadvocacia.com.br` resolvido — o registro `CNAME painel → 4ff470440e79bb74.vercel-dns-017.com.` propagou na zona DNS da própria Vercel (nameservers já delegados lá, sem passo manual adicional), SSL emitido automaticamente.
+- [x] Login dos 3 usuários (Dr. Hélio, secretária, Lucas) verificado com sucesso no CRM pelo subdomínio novo.
+
+**Entregue:** cutover completo dos dois domínios temporários (`*.vercel.app`) para os domínios oficiais do escritório — site em `heliokleisonadvocacia.com.br` e CRM em `painel.heliokleisonadvocacia.com.br`, ambos com SSL válido. Login confirmado para os 3 usuários reais em produção. Plano Vercel Hobby mantido como decisão consciente. Nenhuma mudança de código nesta fase — só configuração de infraestrutura (DNS/domínios) nos dashboards da Vercel.
+
+**Registro:** spec em `docs/specs/fase10-deploy-producao.md` (Technical/Learning Outcome na seção 5); handoff em `docs/handoffs/2026-08-20-fase10-deploy-producao.md`.
 
 ---
 

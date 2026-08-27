@@ -42,12 +42,23 @@ export function useChatConversation() {
   const [error, setError] = useState(false)
   const conversaIdRef = useRef<string | null>(null)
 
+  /**
+   * Alguns in-app browsers (ex: webview do Instagram/Facebook) bloqueiam ou
+   * lançam exceção ao acessar localStorage. Se isso acontecer, cai para um
+   * id só em memória (via conversaIdRef) em vez de travar o widget — o
+   * conversa_id simplesmente não sobrevive a um reload da página nesse caso.
+   */
   function garantirConversaId(): string {
     if (conversaIdRef.current) return conversaIdRef.current
 
-    const existente = localStorage.getItem(CONVERSA_ID_STORAGE_KEY)
-    const id = existente ?? gerarId()
-    if (!existente) localStorage.setItem(CONVERSA_ID_STORAGE_KEY, id)
+    let id: string
+    try {
+      const existente = localStorage.getItem(CONVERSA_ID_STORAGE_KEY)
+      id = existente ?? gerarId()
+      if (!existente) localStorage.setItem(CONVERSA_ID_STORAGE_KEY, id)
+    } catch {
+      id = gerarId()
+    }
 
     conversaIdRef.current = id
     return id

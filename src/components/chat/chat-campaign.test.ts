@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it } from "vitest"
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
 import {
   CHAT_OPEN_PARAM,
@@ -71,5 +71,28 @@ describe("registrarOrigem / getOrigem", () => {
 
     expect(sessionStorage.getItem(STORAGE_KEY)).toBe("facebook_ads")
     expect(getOrigem()).toBe("facebook_ads")
+  })
+
+  describe("quando sessionStorage lança exceção (ex: in-app browser do Instagram/Facebook bloqueando storage)", () => {
+    it("registrarOrigem não lança, apenas deixa de persistir", () => {
+      const setItemSpy = vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
+        throw new DOMException("Storage bloqueado", "SecurityError")
+      })
+
+      expect(() => registrarOrigem("facebook_ads")).not.toThrow()
+
+      setItemSpy.mockRestore()
+    })
+
+    it("getOrigem retorna null em vez de lançar", () => {
+      const getItemSpy = vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
+        throw new DOMException("Storage bloqueado", "SecurityError")
+      })
+
+      expect(() => getOrigem()).not.toThrow()
+      expect(getOrigem()).toBeNull()
+
+      getItemSpy.mockRestore()
+    })
   })
 })

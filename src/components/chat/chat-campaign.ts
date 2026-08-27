@@ -20,8 +20,18 @@ export function parseChatCampaignParams(search: string): ChatCampaignParams {
   }
 }
 
+/**
+ * Mesmo bloqueio de storage que pode afetar `garantirConversaId` (ver
+ * use-chat-conversation.ts) pode afetar sessionStorage aqui. Se falhar, a
+ * origem simplesmente não é registrada — o payload ao n8n sai sem o campo
+ * `origem`, como já acontece hoje para tráfego orgânico.
+ */
 export function registrarOrigem(origem: string): void {
-  sessionStorage.setItem(ORIGEM_STORAGE_KEY, origem)
+  try {
+    sessionStorage.setItem(ORIGEM_STORAGE_KEY, origem)
+  } catch {
+    // Storage bloqueado: segue sem registrar, sem travar o widget.
+  }
 }
 
 /**
@@ -30,5 +40,9 @@ export function registrarOrigem(origem: string): void {
  * visita orgânica futura (mesmo navegador, dias depois) à campanha antiga.
  */
 export function getOrigem(): string | null {
-  return sessionStorage.getItem(ORIGEM_STORAGE_KEY)
+  try {
+    return sessionStorage.getItem(ORIGEM_STORAGE_KEY)
+  } catch {
+    return null
+  }
 }

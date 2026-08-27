@@ -60,6 +60,51 @@ describe("useChatConversation", () => {
 
       expect(id).toBe("id-existente")
     })
+
+    describe("quando localStorage lança exceção (ex: in-app browser do Instagram/Facebook bloqueando storage)", () => {
+      function bloquearLocalStorage() {
+        const getItemSpy = vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
+          throw new DOMException("Storage bloqueado", "SecurityError")
+        })
+        const setItemSpy = vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
+          throw new DOMException("Storage bloqueado", "SecurityError")
+        })
+        return () => {
+          getItemSpy.mockRestore()
+          setItemSpy.mockRestore()
+        }
+      }
+
+      it("gera um id em memória e não lança, mesmo sem conseguir persistir", () => {
+        const restaurar = bloquearLocalStorage()
+        const { result } = renderHook(() => useChatConversation())
+
+        let id = ""
+        expect(() => {
+          act(() => {
+            id = result.current.garantirConversaId()
+          })
+        }).not.toThrow()
+
+        expect(id).toMatch(/^[0-9a-f-]{36}$/)
+        restaurar()
+      })
+
+      it("mantém o mesmo id em memória em chamadas seguintes, dentro da mesma instância do hook", () => {
+        const restaurar = bloquearLocalStorage()
+        const { result } = renderHook(() => useChatConversation())
+
+        let first = ""
+        let second = ""
+        act(() => {
+          first = result.current.garantirConversaId()
+          second = result.current.garantirConversaId()
+        })
+
+        expect(second).toBe(first)
+        restaurar()
+      })
+    })
   })
 
   describe("sendMessage", () => {

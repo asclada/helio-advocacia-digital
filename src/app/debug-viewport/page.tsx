@@ -126,7 +126,7 @@ export default function DebugViewportPage() {
         </tbody>
       </table>
       <h2 style={{ fontSize: 14, marginBottom: 8 }}>Eventos capturados (mais recente primeiro):</h2>
-      <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+      <ul style={{ listStyle: "none", padding: 0, margin: 0, marginBottom: 24 }}>
         {log.length === 0 && <li style={{ color: "#666" }}>(nenhum evento ainda)</li>}
         {log.map((l, i) => (
           <li key={i} style={{ padding: "2px 0", borderBottom: "1px solid #222" }}>
@@ -134,6 +134,24 @@ export default function DebugViewportPage() {
           </li>
         ))}
       </ul>
+
+      <h2 style={{ fontSize: 14, marginBottom: 8, color: "#fff" }}>
+        Teste 3: campo NORMAL (sem position:fixed), lá embaixo da página
+      </h2>
+      <p style={{ marginBottom: 12, color: "#fff" }}>
+        Role a página até o campo azul no final e toque nele. Se o navegador
+        rolar sozinho pra mostrar o campo acima do teclado, o comportamento
+        nativo funciona pra elementos normais (não fixos) — aí a correção é
+        tirar o chat de position:fixed enquanto o teclado estiver aberto.
+      </p>
+      <div style={{ height: "80vh", border: "1px dashed #444", display: "flex", alignItems: "center", justifyContent: "center", color: "#666" }}>
+        (espaço vazio de propósito — role a página)
+      </div>
+      <input
+        type="text"
+        placeholder="Campo NORMAL no fim da página (sem fixed)"
+        style={{ width: "100%", padding: 10, fontSize: 16, boxSizing: "border-box", background: "#00f", color: "#fff", marginBottom: 40 }}
+      />
     </div>
   )
 }

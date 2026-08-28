@@ -14,6 +14,7 @@ export default function DebugViewportPage() {
   const [log, setLog] = useState<string[]>([])
   const [dados, setDados] = useState<Record<string, string>>({})
   const [caixa, setCaixa] = useState<{ top: number; left: number; width: number; height: number } | null>(null)
+  const [campoFocado, setCampoFocado] = useState(false)
 
   useEffect(() => {
     function ler() {
@@ -152,6 +153,52 @@ export default function DebugViewportPage() {
         placeholder="Campo NORMAL no fim da página (sem fixed)"
         style={{ width: "100%", padding: 10, fontSize: 16, boxSizing: "border-box", background: "#00f", color: "#fff", marginBottom: 40 }}
       />
+
+      <h2 style={{ fontSize: 14, marginBottom: 8, color: "#fff" }}>
+        Teste 4: painel fixo (igual o chat) que move o campo pro TOPO quando foca
+      </h2>
+      <p style={{ marginBottom: 12, color: "#fff" }}>
+        Toque no campo laranja dentro da caixa roxa abaixo. Sem medir nada do
+        teclado, ele deve pular pro topo da caixa (perto do cabeçalho) assim
+        que ganha foco — então deve continuar visível mesmo com o teclado
+        aberto.
+      </p>
+      <div
+        style={{
+          position: "fixed",
+          top: 60,
+          left: 12,
+          right: 12,
+          bottom: 12,
+          border: "4px solid purple",
+          background: "#000",
+          display: "flex",
+          flexDirection: "column",
+          zIndex: 9998,
+        }}
+      >
+        <div style={{ padding: 8, borderBottom: "1px solid purple", color: "purple", fontWeight: "bold", order: 0 }}>
+          cabeçalho (fixo)
+        </div>
+        <div style={{ flex: 1, overflowY: "auto", color: "#0f0", padding: 8, order: 2 }}>
+          (área de mensagens — encolhe quando o campo está focado)
+        </div>
+        <input
+          onFocus={() => setCampoFocado(true)}
+          onBlur={() => setCampoFocado(false)}
+          type="text"
+          placeholder="Campo LARANJA (toque aqui)"
+          style={{
+            padding: 10,
+            fontSize: 16,
+            boxSizing: "border-box",
+            background: "orange",
+            color: "#000",
+            margin: 8,
+            order: campoFocado ? 1 : 3,
+          }}
+        />
+      </div>
     </div>
   )
 }

@@ -7,13 +7,14 @@ import { useEffect, useRef, useState } from "react"
 
 import { ChatMessageBubble } from "@/components/chat/chat-message-bubble"
 import type { ChatMessage } from "@/components/chat/use-chat-conversation"
-import { useKeyboardInset } from "@/components/chat/use-keyboard-inset"
 import { buttonVariants } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
 
 const SAUDACAO_INICIAL =
   "Olá! Sou o assistente virtual do escritório do Dr. Helio Kleison. Como posso te ajudar hoje?"
+
+const MOBILE_BREAKPOINT_PX = 640
 
 interface ChatPanelProps {
   open: boolean
@@ -28,7 +29,8 @@ function ChatPanel({ open, onOpenChange, mensagens, loading, onSendMessage }: Ch
   const [saudacaoTimestamp] = useState(() => Date.now())
   const fimDaListaRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
-  const keyboardInset = useKeyboardInset()
+  const scrollBurstRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const [campoFocado, setCampoFocado] = useState(false)
 
   useEffect(() => {
     fimDaListaRef.current?.scrollIntoView({ block: "end" })
@@ -36,11 +38,7 @@ function ChatPanel({ open, onOpenChange, mensagens, loading, onSendMessage }: Ch
 
   /**
    * `blur()` explícito no envio: fecha o teclado virtual no mobile depois
-   * de mandar a mensagem, senão o teclado cobre a resposta do agente. Sem
-   * isso, o site conta apenas com o navegador encolher a viewport sozinho
-   * (`interactiveWidget: "resizes-content"` em layout.tsx) — o que
-   * in-app browsers de campanha (ex: navegador embutido do Facebook Ads)
-   * não respeitam, deixando o teclado sobreposto à tela inteira.
+   * de mandar a mensagem, senão o teclado cobre a resposta do agente.
    */
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault()
@@ -51,11 +49,58 @@ function ChatPanel({ open, onOpenChange, mensagens, loading, onSendMessage }: Ch
     setTexto("")
   }
 
+  /**
+   * O navegador embutido do Instagram/Facebook Ads não dá NENHUM sinal
+   * utilizável sobre o teclado virtual: `visualViewport` existe mas nunca
+   * dispara `resize`/`scroll` quando o teclado abre (confirmado com
+   * diagnóstico ao vivo em `/debug-viewport`, 2026-08-28), e nem um campo
+   * comum (fora de `position:fixed`) recebe o scroll-into-view nativo que
+   * a maioria dos navegadores mobile faz sozinha. Só duas coisas se
+   * provaram confiáveis nesse navegador: o evento `focus` do próprio
+   * campo (sempre dispara) e
+   * forçar `scrollTo(0,0)` repetidamente por ~1s (uma tentativa isolada
+   * não bastou — o navegador parece corrigir a posição de rolagem sozinho
+   * de forma atrasada/inconsistente, sobrescrevendo uma correção única).
+   * Combinado com mover o campo pro topo do painel via `order` (abaixo),
+   * isso garante que o campo fique visível mesmo sem saber a altura do
+   * teclado.
+   */
+  function handleInputFocus() {
+    setCampoFocado(true)
+    if (document.documentElement.clientWidth >= MOBILE_BREAKPOINT_PX) return
+
+    if (scrollBurstRef.current) clearInterval(scrollBurstRef.current)
+    let tentativas = 0
+    scrollBurstRef.current = setInterval(() => {
+      tentativas += 1
+      window.scrollTo(0, 0)
+      document.documentElement.scrollTop = 0
+      document.body.scrollTop = 0
+      if (tentativas >= 10 && scrollBurstRef.current) {
+        clearInterval(scrollBurstRef.current)
+        scrollBurstRef.current = null
+      }
+    }, 100)
+  }
+
+  function handleInputBlur() {
+    setCampoFocado(false)
+    if (scrollBurstRef.current) {
+      clearInterval(scrollBurstRef.current)
+      scrollBurstRef.current = null
+    }
+  }
+
+  useEffect(() => {
+    return () => {
+      if (scrollBurstRef.current) clearInterval(scrollBurstRef.current)
+    }
+  }, [])
+
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange} modal={false}>
       <Dialog.Portal>
         <Dialog.Popup
-          style={keyboardInset > 0 ? { bottom: keyboardInset } : undefined}
           className={cn(
             "fixed inset-x-0 top-(--header-height) bottom-0 z-(--z-chat-widget)",
             "flex w-full flex-col bg-navy-surface",
@@ -64,15 +109,7 @@ function ChatPanel({ open, onOpenChange, mensagens, loading, onSendMessage }: Ch
             "sm:rounded-2xl sm:border sm:border-border sm:shadow-2xl"
           )}
         >
-          {/*
-            Sem `h-[calc(100dvh-...)]` explícito no mobile de propósito: a
-            altura agora vem implicitamente de `top` + `bottom` (auto), pra
-            que o `style.bottom` acima (via useKeyboardInset) consiga
-            encolher o painel puxando o rodapé pra cima do teclado. Um
-            `height` fixo junto de `top` e `bottom` deixaria o elemento
-            sobre-restringido e o navegador ignoraria o `bottom` inline.
-          */}
-          <div className="flex items-center gap-3 border-b border-border px-4 py-3">
+          <div className="order-1 flex items-center gap-3 border-b border-border px-4 py-3">
             <Image
               src="/images/dr-helio-sobre.png"
               alt=""
@@ -91,7 +128,12 @@ function ChatPanel({ open, onOpenChange, mensagens, loading, onSendMessage }: Ch
             </Dialog.Close>
           </div>
 
-          <div className="flex-1 space-y-4 overflow-y-auto px-4 py-4">
+          <div
+            className={cn(
+              "flex-1 space-y-4 overflow-y-auto px-4 py-4",
+              campoFocado ? "order-3 sm:order-2" : "order-2"
+            )}
+          >
             <ChatMessageBubble
               mensagem={{
                 id: "saudacao-inicial",
@@ -109,14 +151,29 @@ function ChatPanel({ open, onOpenChange, mensagens, loading, onSendMessage }: Ch
             <div ref={fimDaListaRef} />
           </div>
 
+          {/*
+            `order-2 sm:order-3` quando focado: no mobile (abaixo do
+            breakpoint `sm`), o formulário pula pro topo do painel (logo
+            abaixo do cabeçalho) em vez de ficar no rodapé — ver comentário
+            de `handleInputFocus` acima. `sm:order-3` mantém o desktop
+            sempre normal, mesmo com o campo focado (lá não tem teclado
+            virtual cobrindo nada). Sem isso, no navegador embutido do
+            Instagram/Facebook Ads o teclado cobre o rodapé inteiro e o
+            campo/botão de enviar ficam invisíveis.
+          */}
           <form
             onSubmit={handleSubmit}
-            className="flex items-center gap-2 border-t border-border p-3"
+            className={cn(
+              "flex items-center gap-2 p-3",
+              campoFocado ? "order-2 border-b border-border sm:order-3 sm:border-t sm:border-b-0" : "order-3 border-t border-border"
+            )}
           >
             <Input
               ref={inputRef}
               value={texto}
               onChange={(event) => setTexto(event.target.value)}
+              onFocus={handleInputFocus}
+              onBlur={handleInputBlur}
               placeholder="Digite sua mensagem"
               aria-label="Mensagem"
               className="h-11"

@@ -13,7 +13,7 @@ export default function DebugViewportPage() {
   const inputRef = useRef<HTMLInputElement>(null)
   const [log, setLog] = useState<string[]>([])
   const [dados, setDados] = useState<Record<string, string>>({})
-  const [caixa, setCaixa] = useState<{ top: number; left: number; width: number; height: number } | null>(null)
+  const [, setCaixa] = useState<{ top: number; left: number; width: number; height: number } | null>(null)
   const [campoFocado, setCampoFocado] = useState(false)
 
   useEffect(() => {
@@ -80,42 +80,11 @@ export default function DebugViewportPage() {
         placeholder="Toque aqui pra abrir o teclado"
         style={{ width: "100%", padding: 10, fontSize: 16, marginBottom: 16, boxSizing: "border-box" }}
       />
-      {caixa && (
-        <div
-          style={{
-            position: "fixed",
-            top: caixa.top,
-            left: caixa.left,
-            width: caixa.width,
-            height: caixa.height,
-            border: "4px solid red",
-            boxSizing: "border-box",
-            pointerEvents: "none",
-            zIndex: 9999,
-          }}
-        >
-          <div
-            style={{
-              position: "absolute",
-              bottom: 8,
-              left: 8,
-              right: 8,
-              pointerEvents: "auto",
-              display: "flex",
-              gap: 8,
-            }}
-          >
-            <input
-              type="text"
-              placeholder="Campo DENTRO da caixa vermelha (fixada no visualViewport)"
-              style={{ flex: 1, padding: 10, fontSize: 16, boxSizing: "border-box", background: "yellow", color: "#000" }}
-            />
-          </div>
-          <div style={{ position: "absolute", top: 4, left: 4, color: "red", background: "#fff", padding: "2px 6px", fontSize: 11 }}>
-            caixa vermelha = visualViewport (deve ficar sempre acima do teclado)
-          </div>
-        </div>
-      )}
+      {/* Teste 2 (caixa vermelha fixada no visualViewport) removido: já
+          confirmou que visualViewport é inerte nesse navegador, e estava
+          sobrepondo visualmente o Teste 4 (caixa roxa), que é o que importa
+          agora. caixa/setCaixa continuam alimentando a tabela de números
+          abaixo, só a caixa vermelha em si foi removida da tela. */}
       <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: 16 }}>
         <tbody>
           {Object.entries(dados).map(([k, v]) => (

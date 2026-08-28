@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react"
 
 import { ChatMessageBubble } from "@/components/chat/chat-message-bubble"
 import type { ChatMessage } from "@/components/chat/use-chat-conversation"
+import { useKeyboardInset } from "@/components/chat/use-keyboard-inset"
 import { buttonVariants } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
@@ -27,6 +28,7 @@ function ChatPanel({ open, onOpenChange, mensagens, loading, onSendMessage }: Ch
   const [saudacaoTimestamp] = useState(() => Date.now())
   const fimDaListaRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const keyboardInset = useKeyboardInset()
 
   useEffect(() => {
     fimDaListaRef.current?.scrollIntoView({ block: "end" })
@@ -53,14 +55,23 @@ function ChatPanel({ open, onOpenChange, mensagens, loading, onSendMessage }: Ch
     <Dialog.Root open={open} onOpenChange={onOpenChange} modal={false}>
       <Dialog.Portal>
         <Dialog.Popup
+          style={keyboardInset > 0 ? { bottom: keyboardInset } : undefined}
           className={cn(
             "fixed inset-x-0 top-(--header-height) bottom-0 z-(--z-chat-widget)",
-            "flex h-[calc(100dvh-var(--header-height))] w-full flex-col bg-navy-surface",
+            "flex w-full flex-col bg-navy-surface",
             "sm:inset-auto sm:top-auto sm:right-6 sm:bottom-24",
             "sm:h-[32rem] sm:max-h-[calc(100dvh-6rem)] sm:w-96",
             "sm:rounded-2xl sm:border sm:border-border sm:shadow-2xl"
           )}
         >
+          {/*
+            Sem `h-[calc(100dvh-...)]` explícito no mobile de propósito: a
+            altura agora vem implicitamente de `top` + `bottom` (auto), pra
+            que o `style.bottom` acima (via useKeyboardInset) consiga
+            encolher o painel puxando o rodapé pra cima do teclado. Um
+            `height` fixo junto de `top` e `bottom` deixaria o elemento
+            sobre-restringido e o navegador ignoraria o `bottom` inline.
+          */}
           <div className="flex items-center gap-3 border-b border-border px-4 py-3">
             <Image
               src="/images/dr-helio-sobre.png"

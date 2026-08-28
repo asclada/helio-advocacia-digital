@@ -153,7 +153,13 @@ export default function DebugViewportPage() {
           (área de mensagens — encolhe quando o campo está focado)
         </div>
         <input
-          onFocus={() => setCampoFocado(true)}
+          onFocus={() => {
+            setCampoFocado(true)
+            setTimeout(() => {
+              window.scrollTo(0, 0)
+              setLog((l) => [`scrollTo(0,0) disparado @ ${new Date().toLocaleTimeString("pt-BR")}`, ...l].slice(0, 20))
+            }, 300)
+          }}
           onBlur={() => setCampoFocado(false)}
           type="text"
           placeholder="Campo LARANJA (toque aqui)"

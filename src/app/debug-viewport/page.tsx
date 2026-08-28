@@ -35,6 +35,9 @@ export default function DebugViewportPage() {
         setCaixa({ top: vv.offsetTop, left: vv.offsetLeft, width: vv.width, height: vv.height })
       }
       novo["document.activeElement"] = document.activeElement?.tagName ?? "?"
+      novo["window.scrollY"] = String(window.scrollY)
+      novo["document.documentElement.scrollTop"] = String(document.documentElement.scrollTop)
+      novo["document.body.scrollTop"] = String(document.body.scrollTop)
       novo["timestamp"] = new Date().toLocaleTimeString("pt-BR")
       setDados(novo)
     }
@@ -155,10 +158,21 @@ export default function DebugViewportPage() {
         <input
           onFocus={() => {
             setCampoFocado(true)
-            setTimeout(() => {
+            let tentativas = 0
+            const id = setInterval(() => {
+              tentativas += 1
+              const antes = window.scrollY
               window.scrollTo(0, 0)
-              setLog((l) => [`scrollTo(0,0) disparado @ ${new Date().toLocaleTimeString("pt-BR")}`, ...l].slice(0, 20))
-            }, 300)
+              document.documentElement.scrollTop = 0
+              document.body.scrollTop = 0
+              setLog((l) =>
+                [
+                  `tentativa ${tentativas} @ ${new Date().toLocaleTimeString("pt-BR")} — scrollY antes: ${antes}, depois: ${window.scrollY}`,
+                  ...l,
+                ].slice(0, 20)
+              )
+              if (tentativas >= 10) clearInterval(id)
+            }, 100)
           }}
           onBlur={() => setCampoFocado(false)}
           type="text"

@@ -13,6 +13,7 @@ export default function DebugViewportPage() {
   const inputRef = useRef<HTMLInputElement>(null)
   const [log, setLog] = useState<string[]>([])
   const [dados, setDados] = useState<Record<string, string>>({})
+  const [caixa, setCaixa] = useState<{ top: number; left: number; width: number; height: number } | null>(null)
 
   useEffect(() => {
     function ler() {
@@ -20,6 +21,7 @@ export default function DebugViewportPage() {
       const novo: Record<string, string> = {
         "window.innerWidth": String(window.innerWidth),
         "window.innerHeight": String(window.innerHeight),
+        "document.documentElement.clientWidth": String(document.documentElement.clientWidth),
         "document.documentElement.clientHeight": String(document.documentElement.clientHeight),
         "window.visualViewport existe?": vv ? "SIM" : "NÃO",
       }
@@ -27,7 +29,9 @@ export default function DebugViewportPage() {
         novo["visualViewport.height"] = String(vv.height)
         novo["visualViewport.width"] = String(vv.width)
         novo["visualViewport.offsetTop"] = String(vv.offsetTop)
+        novo["visualViewport.offsetLeft"] = String(vv.offsetLeft)
         novo["visualViewport.scale"] = String(vv.scale)
+        setCaixa({ top: vv.offsetTop, left: vv.offsetLeft, width: vv.width, height: vv.height })
       }
       novo["document.activeElement"] = document.activeElement?.tagName ?? "?"
       novo["timestamp"] = new Date().toLocaleTimeString("pt-BR")
@@ -75,6 +79,42 @@ export default function DebugViewportPage() {
         placeholder="Toque aqui pra abrir o teclado"
         style={{ width: "100%", padding: 10, fontSize: 16, marginBottom: 16, boxSizing: "border-box" }}
       />
+      {caixa && (
+        <div
+          style={{
+            position: "fixed",
+            top: caixa.top,
+            left: caixa.left,
+            width: caixa.width,
+            height: caixa.height,
+            border: "4px solid red",
+            boxSizing: "border-box",
+            pointerEvents: "none",
+            zIndex: 9999,
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              bottom: 8,
+              left: 8,
+              right: 8,
+              pointerEvents: "auto",
+              display: "flex",
+              gap: 8,
+            }}
+          >
+            <input
+              type="text"
+              placeholder="Campo DENTRO da caixa vermelha (fixada no visualViewport)"
+              style={{ flex: 1, padding: 10, fontSize: 16, boxSizing: "border-box", background: "yellow", color: "#000" }}
+            />
+          </div>
+          <div style={{ position: "absolute", top: 4, left: 4, color: "red", background: "#fff", padding: "2px 6px", fontSize: 11 }}>
+            caixa vermelha = visualViewport (deve ficar sempre acima do teclado)
+          </div>
+        </div>
+      )}
       <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: 16 }}>
         <tbody>
           {Object.entries(dados).map(([k, v]) => (

@@ -1,0 +1,99 @@
+"use client"
+
+import { useEffect, useRef, useState } from "react"
+
+/**
+ * Página de diagnóstico temporária — NÃO faz parte do produto. Existe só
+ * pra ler, ao vivo, o que o navegador embutido do Facebook Ads realmente
+ * reporta sobre teclado virtual/viewport (window.innerHeight,
+ * visualViewport), já que isso não é simulável fora de um celular de
+ * verdade. Pode ser apagada depois de diagnosticar o bug do chat mobile.
+ */
+export default function DebugViewportPage() {
+  const inputRef = useRef<HTMLInputElement>(null)
+  const [log, setLog] = useState<string[]>([])
+  const [dados, setDados] = useState<Record<string, string>>({})
+
+  useEffect(() => {
+    function ler() {
+      const vv = window.visualViewport
+      const novo: Record<string, string> = {
+        "window.innerWidth": String(window.innerWidth),
+        "window.innerHeight": String(window.innerHeight),
+        "document.documentElement.clientHeight": String(document.documentElement.clientHeight),
+        "window.visualViewport existe?": vv ? "SIM" : "NÃO",
+      }
+      if (vv) {
+        novo["visualViewport.height"] = String(vv.height)
+        novo["visualViewport.width"] = String(vv.width)
+        novo["visualViewport.offsetTop"] = String(vv.offsetTop)
+        novo["visualViewport.scale"] = String(vv.scale)
+      }
+      novo["document.activeElement"] = document.activeElement?.tagName ?? "?"
+      novo["timestamp"] = new Date().toLocaleTimeString("pt-BR")
+      setDados(novo)
+    }
+
+    ler()
+    const onResizeWindow = () => {
+      setLog((l) => [`window resize @ ${new Date().toLocaleTimeString("pt-BR")}`, ...l].slice(0, 20))
+      ler()
+    }
+    window.addEventListener("resize", onResizeWindow)
+
+    const vv = window.visualViewport
+    const onResizeVV = () => {
+      setLog((l) => [`visualViewport resize @ ${new Date().toLocaleTimeString("pt-BR")}`, ...l].slice(0, 20))
+      ler()
+    }
+    const onScrollVV = () => {
+      setLog((l) => [`visualViewport scroll @ ${new Date().toLocaleTimeString("pt-BR")}`, ...l].slice(0, 20))
+      ler()
+    }
+    vv?.addEventListener("resize", onResizeVV)
+    vv?.addEventListener("scroll", onScrollVV)
+
+    const interval = setInterval(ler, 1000)
+
+    return () => {
+      window.removeEventListener("resize", onResizeWindow)
+      vv?.removeEventListener("resize", onResizeVV)
+      vv?.removeEventListener("scroll", onScrollVV)
+      clearInterval(interval)
+    }
+  }, [])
+
+  return (
+    <div style={{ padding: 16, fontFamily: "monospace", fontSize: 13, background: "#111", color: "#0f0", minHeight: "100dvh" }}>
+      <h1 style={{ fontSize: 16, marginBottom: 12 }}>Diagnóstico de viewport / teclado</h1>
+      <p style={{ marginBottom: 12, color: "#fff" }}>
+        Toque no campo abaixo pra abrir o teclado, e veja os números mudando (ou não) em tempo real.
+      </p>
+      <input
+        ref={inputRef}
+        type="text"
+        placeholder="Toque aqui pra abrir o teclado"
+        style={{ width: "100%", padding: 10, fontSize: 16, marginBottom: 16, boxSizing: "border-box" }}
+      />
+      <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: 16 }}>
+        <tbody>
+          {Object.entries(dados).map(([k, v]) => (
+            <tr key={k}>
+              <td style={{ padding: "4px 8px", borderBottom: "1px solid #333", color: "#8f8" }}>{k}</td>
+              <td style={{ padding: "4px 8px", borderBottom: "1px solid #333" }}>{v}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <h2 style={{ fontSize: 14, marginBottom: 8 }}>Eventos capturados (mais recente primeiro):</h2>
+      <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+        {log.length === 0 && <li style={{ color: "#666" }}>(nenhum evento ainda)</li>}
+        {log.map((l, i) => (
+          <li key={i} style={{ padding: "2px 0", borderBottom: "1px solid #222" }}>
+            {l}
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}

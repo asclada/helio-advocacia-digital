@@ -26,15 +26,25 @@ function ChatPanel({ open, onOpenChange, mensagens, loading, onSendMessage }: Ch
   const [texto, setTexto] = useState("")
   const [saudacaoTimestamp] = useState(() => Date.now())
   const fimDaListaRef = useRef<HTMLDivElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     fimDaListaRef.current?.scrollIntoView({ block: "end" })
   }, [mensagens.length, loading])
 
+  /**
+   * `blur()` explícito no envio: fecha o teclado virtual no mobile depois
+   * de mandar a mensagem, senão o teclado cobre a resposta do agente. Sem
+   * isso, o site conta apenas com o navegador encolher a viewport sozinho
+   * (`interactiveWidget: "resizes-content"` em layout.tsx) — o que
+   * in-app browsers de campanha (ex: navegador embutido do Facebook Ads)
+   * não respeitam, deixando o teclado sobreposto à tela inteira.
+   */
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault()
     const mensagemLimpa = texto.trim()
     if (!mensagemLimpa) return
+    inputRef.current?.blur()
     onSendMessage(mensagemLimpa)
     setTexto("")
   }
@@ -93,6 +103,7 @@ function ChatPanel({ open, onOpenChange, mensagens, loading, onSendMessage }: Ch
             className="flex items-center gap-2 border-t border-border p-3"
           >
             <Input
+              ref={inputRef}
               value={texto}
               onChange={(event) => setTexto(event.target.value)}
               placeholder="Digite sua mensagem"

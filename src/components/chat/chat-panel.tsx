@@ -16,6 +16,22 @@ const SAUDACAO_INICIAL =
 
 const MOBILE_BREAKPOINT_PX = 640
 
+/**
+ * Só o navegador embutido do Instagram/Facebook Ads não dá nenhum sinal
+ * utilizável sobre o teclado virtual (ver comentário de `handleInputFocus`
+ * abaixo). Navegadores mobile normais (Chrome/Safari) já encolhem a
+ * viewport sozinhos via `interactiveWidget: "resizes-content"` (ver
+ * `layout.tsx`), então o campo fica ancorado no rodapé e desce
+ * naturalmente acima do teclado sem precisar de nenhum ajuste manual. Sem
+ * essa checagem de user agent, o hack de pular pro topo do painel disparava
+ * em QUALQUER tela estreita, inclusive nos navegadores que já funcionavam
+ * bem sozinhos.
+ */
+function precisaDeFallbackDeTeclado(): boolean {
+  if (typeof navigator === "undefined") return false
+  return /Instagram|FBAN|FBAV|FB_IAB/i.test(navigator.userAgent)
+}
+
 interface ChatPanelProps {
   open: boolean
   onOpenChange: (open: boolean) => void
@@ -66,8 +82,9 @@ function ChatPanel({ open, onOpenChange, mensagens, loading, onSendMessage }: Ch
    * teclado.
    */
   function handleInputFocus() {
-    setCampoFocado(true)
     if (document.documentElement.clientWidth >= MOBILE_BREAKPOINT_PX) return
+    if (!precisaDeFallbackDeTeclado()) return
+    setCampoFocado(true)
 
     if (scrollBurstRef.current) clearInterval(scrollBurstRef.current)
     let tentativas = 0
@@ -182,6 +199,17 @@ function ChatPanel({ open, onOpenChange, mensagens, loading, onSendMessage }: Ch
               type="submit"
               disabled={loading || !texto.trim()}
               aria-label="Enviar mensagem"
+              /*
+               * `onMouseDown` com `preventDefault`: sem isso, o navegador
+               * move o foco pro botão no mousedown (antes do clique
+               * completar), o que dispara o `onBlur` do campo e reordena o
+               * layout (ver `campoFocado` acima) com o dedo/mouse ainda
+               * pressionado — o botão literalmente muda de lugar no meio
+               * do gesto e o clique não registra, exigindo um segundo
+               * toque. Impedir o foco de sair do campo aqui mantém o botão
+               * parado durante o clique.
+               */
+              onMouseDown={(event) => event.preventDefault()}
               className={cn(buttonVariants({ variant: "primary" }), "size-11 shrink-0 rounded-full p-0")}
             >
               <Send className="size-4" aria-hidden="true" />

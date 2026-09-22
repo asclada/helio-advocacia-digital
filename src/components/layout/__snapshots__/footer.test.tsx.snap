@@ -241,6 +241,18 @@ exports[`Footer > snapshot 1`] = `
       >
         Este site tem caráter exclusivamente informativo, em conformidade com o Provimento nº 205/2021 do Conselho Federal da OAB. As informações aqui apresentadas não configuram publicidade irregular, tampouco constituem promessa ou garantia de resultado — todo atendimento jurídico depende de avaliação individual do caso.
       </p>
+      <p>
+        Desenvolvido por:
+         
+        <a
+          class="text-muted-foreground underline-offset-2 transition-colors hover:text-gold-light hover:underline"
+          href="https://boraproar.com"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Bora Pro Ar - Agência Digital
+        </a>
+      </p>
     </div>
   </div>
 </footer>

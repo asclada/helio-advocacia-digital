@@ -100,6 +100,17 @@ function Footer() {
             garantia de resultado — todo atendimento jurídico depende de
             avaliação individual do caso.
           </p>
+          <p>
+            Desenvolvido por:{" "}
+            <a
+              href="https://boraproar.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground underline-offset-2 transition-colors hover:text-gold-light hover:underline"
+            >
+              Bora Pro Ar - Agência Digital
+            </a>
+          </p>
         </Container>
       </div>
     </footer>

@@ -100,6 +100,15 @@ describe("Footer", () => {
     expect(screen.getByText(/não configuram publicidade irregular/i)).toBeInTheDocument()
   })
 
+  it("renderiza o crédito de desenvolvimento, linkando para o site da agência", () => {
+    render(<Footer />)
+
+    const link = screen.getByRole("link", { name: "Bora Pro Ar - Agência Digital" })
+    expect(link).toHaveAttribute("href", "https://boraproar.com")
+    expect(link).toHaveAttribute("target", "_blank")
+    expect(link).toHaveAttribute("rel", "noopener noreferrer")
+  })
+
   it("não tem violações de acessibilidade", async () => {
     const { container } = render(<Footer />)
 
